@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Building on what mass_mailing already ships (privilege +
+         group_mass_mailing_user "User" + group_mass_mailing_campaign
+         "Manage Mass Mailing Campaigns") rather than duplicating it —
+         renamed in place, so mass_mailing's own ir.model.access.csv
+         (already wired to these same two group xmlids) keeps applying
+         with no new ACL rows needed. -->
+
+    <!-- Own section in the Access Rights tab, like Sales/Supply/
+         Production/Logistics each get, instead of the stock "Marketing"
+         category or hitac_base's shared "Hitac Administration" one. -->
+    <record id="module_category_hitac_marketing" model="ir.module.category">
+        <field name="name">Hitac Marketing</field>
+        <field name="description">Hitac Marketing access rights</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="mass_mailing.res_groups_privilege_email_marketing" model="res.groups.privilege">
+        <field name="name">Security Group</field>
+        <field name="category_id" ref="module_category_hitac_marketing"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="mass_mailing.group_mass_mailing_user" model="res.groups">
+        <field name="name">Hitac Marketing User</field>
+    </record>
+
+    <!-- "Manage Mass Mailing Campaigns" becomes the Manager tier — implies
+         the User group, same as every other Hitac Manager group, so a
+         Marketing Manager automatically gets User-level access too. -->
+    <record id="mass_mailing.group_mass_mailing_campaign" model="res.groups">
+        <field name="name">Hitac Marketing Manager</field>
+        <field name="privilege_id" ref="mass_mailing.res_groups_privilege_email_marketing"/>
+        <field name="implied_ids" eval="[Command.link(ref('mass_mailing.group_mass_mailing_user'))]"/>
+    </record>
+
+    <!-- Access Level: which mailings a user can see/edit, enforced by the
+         ir.rule records in security/ir_rules.xml. Same "Own / Own+Others
+         Read Only / Own+All Full Access" tiering as every other module,
+         defined here (rather than hitac_base) for the same reason the
+         Security Group privilege above lives here. -->
+    <record id="privilege_hitac_marketing_access" model="res.groups.privilege">
+        <field name="name">Access Level</field>
+        <field name="category_id" ref="module_category_hitac_marketing"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_marketing_access_own" model="res.groups">
+        <field name="name">Own Documents Only</field>
+        <field name="privilege_id" ref="privilege_hitac_marketing_access"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_marketing_access_read_all" model="res.groups">
+        <field name="name">Own &amp; Others: Read Only</field>
+        <field name="privilege_id" ref="privilege_hitac_marketing_access"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_marketing_access_full" model="res.groups">
+        <field name="name">Own &amp; All: Full Access</field>
+        <field name="privilege_id" ref="privilege_hitac_marketing_access"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- hitac_base doesn't depend on mass_mailing/hitac_marketing, so this
+         module adds itself to the admin group's implied_ids from this
+         side instead (same pattern hitac_supply uses for its own groups).
+         Not extended to the Access Level groups above — same reasoning as
+         hitac_base/security/hitac_groups.xml: Hitac Admin holds none of
+         them, so it is simply unaffected by the ir.rule records below and
+         already sees every mailing unrestricted. -->
+    <record id="hitac_base.group_hitac_admin" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('mass_mailing.group_mass_mailing_campaign'))]"/>
+    </record>
+
+</odoo>

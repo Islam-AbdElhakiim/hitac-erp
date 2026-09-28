@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Adds the Supply Order link into the "Hitac Traceability" group that
+         hitac_base defines on the vendor bill form. -->
+    <record id="view_move_form_hitac_supply" model="ir.ui.view">
+        <field name="name">hitac.supply.account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="hitac_base.view_move_form_hitac"/>
+        <field name="arch" type="xml">
+            <field name="hitac_sale_order_id" position="before">
+                <field name="hitac_supply_order_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="supply_order_view_list" model="ir.ui.view">
+        <field name="name">supply.order.list</field>
+        <field name="model">supply.order</field>
+        <field name="arch" type="xml">
+            <list string="Supply Orders"
+                  decoration-info="state == 'new'"
+                  decoration-warning="state == 'in_progress'"
+                  decoration-success="state == 'received'"
+                  decoration-danger="state == 'returned'">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="expected_date"/>
+                <field name="packing_house_id"/>
+                <field name="total_received_quantity"/>
+                <field name="has_return"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'new'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state == 'received'"
+                       decoration-danger="state == 'returned'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="supply_order_view_form" model="ir.ui.view">
+        <field name="name">supply.order.form</field>
+        <field name="model">supply.order</field>
+        <field name="arch" type="xml">
+            <form string="Supply Order">
+                <header>
+                    <button name="action_set_in_progress" string="Start" type="object"
+                            invisible="state != 'new'" class="btn-primary"/>
+                    <button name="action_set_received" string="Mark Received" type="object"
+                            invisible="state != 'in_progress'" class="btn-primary"/>
+                    <button name="action_set_returned" string="Mark Returned" type="object"
+                            invisible="state != 'received'"/>
+                    <button name="action_create_return_shipment" string="Create Return Shipment"
+                            type="object"
+                            invisible="not has_return or state not in ('received', 'returned')"
+                            class="btn-secondary"/>
+                    <button name="action_reset_to_new" string="Reset to New" type="object"
+                            invisible="state not in ('in_progress', 'returned')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,in_progress,received"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="type"/>
+                            <field name="expected_date"/>
+                            <field name="has_return"/>
+                        </group>
+                        <group string="Supplier">
+                            <field name="supplier_id"/>
+                            <field name="packing_house_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sales Orders" name="sales_orders">
+                            <field name="sales_order_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="date_order"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Shipments" name="shipments">
+                            <group>
+                                <field name="total_received_quantity" readonly="1"/>
+                            </group>
+                            <field name="shipment_ids">
+                                <list editable="bottom">
+                                    <field name="is_return" optional="show"/>
+                                    <field name="product_id"/>
+                                    <field name="supplier_id"/>
+                                    <field name="destination"/>
+                                    <field name="expected_date"/>
+                                    <field name="quantity"/>
+                                    <field name="received_quantity"/>
+                                    <field name="receiver_user_id"/>
+                                    <field name="status" widget="badge"
+                                           decoration-muted="status == 'pending'"
+                                           decoration-warning="status == 'shipped'"
+                                           decoration-success="status == 'received'"
+                                           decoration-danger="status == 'returned'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="supply_order_view_search" model="ir.ui.view">
+        <field name="name">supply.order.search</field>
+        <field name="model">supply.order</field>
+        <field name="arch" type="xml">
+            <search string="Supply Orders">
+                <field name="name" string="Reference"/>
+                <field name="supplier_id"/>
+                <field name="packing_house_id"/>
+                <separator/>
+                <filter string="New" name="filter_new" domain="[('state', '=', 'new')]"/>
+                <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Received" name="filter_received" domain="[('state', '=', 'received')]"/>
+                <filter string="Returned" name="filter_returned" domain="[('state', '=', 'returned')]"/>
+                <separator/>
+                <filter string="Has Return" name="filter_has_return" domain="[('has_return', '=', True)]"/>
+                <separator/>
+                <filter string="Product" name="filter_product" domain="[('type', '=', 'product')]"/>
+                <filter string="Packaging" name="filter_packaging" domain="[('type', '=', 'packaging')]"/>
+                <group>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'type'}"/>
+                    <filter string="Packing House" name="group_packing_house" context="{'group_by': 'packing_house_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_supply_order" model="ir.actions.act_window">
+        <field name="name">Supply Orders</field>
+        <field name="res_model">supply.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="supply_order_view_search"/>
+        <field name="context">{'search_default_filter_new': 1}</field>
+    </record>
+
+    <record id="action_supply_products" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">supply.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type', '=', 'product')]</field>
+        <field name="context">{'default_type': 'product'}</field>
+        <field name="search_view_id" ref="supply_order_view_search"/>
+    </record>
+
+    <record id="action_supply_packaging" model="ir.actions.act_window">
+        <field name="name">Packaging</field>
+        <field name="res_model">supply.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type', '=', 'packaging')]</field>
+        <field name="context">{'default_type': 'packaging'}</field>
+        <field name="search_view_id" ref="supply_order_view_search"/>
+    </record>
+
+    <record id="action_supply_returns" model="ir.actions.act_window">
+        <field name="name">Returns</field>
+        <field name="res_model">supply.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('has_return', '=', True)]</field>
+        <field name="context">{'default_has_return': True}</field>
+        <field name="search_view_id" ref="supply_order_view_search"/>
+    </record>
+
+    <record id="action_supply_suppliers" model="ir.actions.act_window">
+        <field name="name">Suppliers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('supplier_rank', '>', 0)]</field>
+        <field name="context">{'default_supplier_rank': 1}</field>
+    </record>
+
+</odoo>

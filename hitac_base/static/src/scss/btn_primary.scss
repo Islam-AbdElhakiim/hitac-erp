@@ -1,0 +1,25 @@
+// Overrides the primary button color to RGB(59, 144, 202).
+//
+// addons/web/static/src/scss/hitac.variables.scss already sets
+// $o-brand-primary to this same color, which correctly threads through to
+// Bootstrap's own $primary / --primary CSS variable. But Odoo's own
+// .btn-primary color map (background/border/hover/active) is built as a
+// static map INSIDE primary_variables.scss, computed with darken()/mix()
+// at the point that file runs — before hitac.variables.scss loads (it's
+// deliberately last in that bundle) — so reassigning the variable
+// afterwards doesn't change values already baked into that map. Overriding
+// the resulting CSS custom properties directly here, in web.assets_backend
+// (loaded after Odoo's own generated button CSS), is what actually wins.
+$hitac-btn-primary: rgb(59, 144, 202);
+
+.btn-primary {
+    --btn-bg: #{$hitac-btn-primary};
+    --btn-border-color: #{$hitac-btn-primary};
+    --btn-hover-bg: #{darken($hitac-btn-primary, 10%)};
+    --btn-hover-border-color: #{darken($hitac-btn-primary, 20%)};
+    --btn-active-bg: #{mix($hitac-btn-primary, white, 10%)};
+    --btn-active-border-color: #{$hitac-btn-primary};
+    --btn-active-color: #{darken($hitac-btn-primary, 20%)};
+    --btn-disabled-bg: #{$hitac-btn-primary};
+    --btn-disabled-border-color: #{$hitac-btn-primary};
+}

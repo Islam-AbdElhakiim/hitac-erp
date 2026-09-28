@@ -1,0 +1,18 @@
+// Login page branding — ties the card to the same blue used throughout
+// the backend ($o-brand-odoo, set in primary_variables.scss). Scoped to
+// .hitac_login_card, added via views/portal_branding_overrides.xml, so
+// it only touches the login / database-manager screens.
+.hitac_login_card {
+    border-top: 4px solid $o-brand-odoo;
+}
+
+// Hitac emblem replacing the per-database company logo (see
+// views/portal_branding_overrides.xml). Source is a 192x192 square
+// (static/img/hitac.png) — capped well under the card's own width
+// (max-width: 300px, see .hitac_login_card) so it reads as an icon
+// rather than filling the header.
+.hitac_login_logo {
+    max-height: 88px;
+    width: auto;
+    max-width: 100%;
+}

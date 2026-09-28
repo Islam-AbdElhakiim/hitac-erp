@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_logistics_shipment" model="ir.sequence">
+        <field name="name">Logistics Shipment</field>
+        <field name="code">logistics.shipment</field>
+        <field name="prefix">SHIP/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_logistics_container" model="ir.sequence">
+        <field name="name">Logistics Container</field>
+        <field name="code">logistics.container</field>
+        <field name="prefix">CONT/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

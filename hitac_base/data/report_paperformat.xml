@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- ======================================================
+             Tight-margin A4 format for the custom Hitac documents
+             (proforma/sales order, invoice). These reports draw their
+             own full-page layout instead of using web.external_layout,
+             so they don't need the ~52mm/32mm top/bottom margins the
+             stock "A4" format reserves for Odoo's standard header and
+             footer. That reserved space was rendering as dead white
+             space around the document.
+        ====================================================== -->
+        <record id="paperformat_hitac_doc" model="report.paperformat">
+            <field name="name">Hitac Document (A4, tight margins)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">6</field>
+            <field name="margin_right">6</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">8</field>
+            <field name="dpi">90</field>
+            <field name="css_margins" eval="True"/>
+        </record>
+    </data>
+</odoo>

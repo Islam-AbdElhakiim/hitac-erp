@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Access Level record rules for mailing.mailing (see this module's
+         group_hitac_marketing_access_own/read_all/full, defined in
+         security/marketing_groups.xml). mailing.mailing already has a
+         user_id field (the mailing's owner), so ownership is keyed off
+         that instead of create_uid. -->
+
+    <record id="mailing_mailing_hitac_access_own_rule" model="ir.rule">
+        <field name="name">Hitac Marketing Access Level: Own Documents Only</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_mailing"/>
+        <field name="groups" eval="[Command.link(ref('group_hitac_marketing_access_own'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="mailing_mailing_hitac_access_read_all_read_rule" model="ir.rule">
+        <field name="name">Hitac Marketing Access Level: Own &amp; Others Read Only (read)</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_mailing"/>
+        <field name="groups" eval="[Command.link(ref('group_hitac_marketing_access_read_all'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="mailing_mailing_hitac_access_read_all_write_rule" model="ir.rule">
+        <field name="name">Hitac Marketing Access Level: Own &amp; Others Read Only (write own)</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_mailing"/>
+        <field name="groups" eval="[Command.link(ref('group_hitac_marketing_access_read_all'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="mailing_mailing_hitac_access_full_rule" model="ir.rule">
+        <field name="name">Hitac Marketing Access Level: Own &amp; All Full Access</field>
+        <field name="model_id" ref="mass_mailing.model_mailing_mailing"/>
+        <field name="groups" eval="[Command.link(ref('group_hitac_marketing_access_full'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

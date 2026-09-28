@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         Renders inside the customer-portal page's #portal_sale_content
+         (see sale.sale_order_portal_template / _get_name_portal_content_view).
+         Reuses the exact same markup as the Print/Preview PDF document
+         so the online view and the printed one always match.
+    ====================================================== -->
+    <template id="portal_content_hitac">
+        <!-- sale_management's SaleUpdateLineButton interaction is activated
+             on every portal quote page (selector ".o_portal_sale_sidebar",
+             which wraps this whole content area) and unconditionally reads
+             table#sales_order_table's dataset on setup. Our layout has no
+             such table, so provide an empty, hidden one with the same
+             data-order-id/data-token attributes purely to satisfy that
+             lookup — none of its actual edit controls (.js_update_line_json,
+             .js_quantity) exist here, so the feature stays inert. -->
+        <table id="sales_order_table" t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" style="display:none"/>
+        <t t-set="doc" t-value="sale_order"/>
+        <t t-call="hitac_sales.report_hitac_saleorder_document"/>
+    </template>
+
+    <!-- ======================================================
+         RENAME: sidebar "View Details" → "View PDF" (that link opens
+         the PDF report directly, see controllers/portal.py)
+    ====================================================== -->
+    <template id="sale_order_portal_view_pdf_label" inherit_id="sale.sale_order_portal_template">
+        <xpath expr="//a[@id='print_invoice_report']" position="replace">
+            <a class="btn btn-light o_print_btn o_portal_invoice_print flex-grow-1" t-att-href="sale_order.get_portal_url(report_type='pdf')" id="print_invoice_report" title="View PDF" role="button" target="_blank"><i class="fa fa-print me-1"/>View PDF</a>
+        </xpath>
+
+        <!-- De-brand the "Connect with your software!" modal: drop the
+             Odoo-drag-and-drop pitch and the "Start on Odoo, it's free!"
+             upsell, keep only the functional part (a URL for the buyer's
+             own system to pull this order's data in UBL format). -->
+        <xpath expr="//div[@id='sale_portal_connect_software_modal']//div[hasclass('modal-body')]" position="replace">
+            <div class="modal-body">
+                <div>
+                    <h5>Get this order's structured data</h5>
+                    <div class="input-group mb-3 w-50">
+                        <t t-set="base_address" t-value="sale_order.env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+                        <t t-set="doc_url" t-value="base_address + '/my/orders/' + str(sale_order.id) + '/download_edi?' + str(keep_query())"/>
+                        <input type="text" class="form-control" aria-describedby="copy-button" readonly="readonly" t-att-value="doc_url"/>
+                        <button class="btn btn-outline-secondary" type="button" id="copy-button"
+                        t-attf-onclick="navigator.clipboard.writeText('#{doc_url}')">Copy</button>
+                    </div>
+                    <p>Use the above URL to retrieve this order's data in UBL format for your own accounting or ERP system.</p>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- ======================================================
+         FIX: breadcrumb label/link on the order page ("Quotations" vs
+         "Sales Orders") hardcodes base states 'sent'/'cancel', which no
+         longer exist under hitac_sales' own state field. Split on
+         'quotation' vs everything else instead, matching the portal
+         list domains in controllers/portal.py.
+    ====================================================== -->
+    <template id="portal_my_home_menu_sale_hitac" inherit_id="sale.portal_my_home_menu_sale">
+        <xpath expr="//li[@id='portal_breadcrumbs_sale']" position="attributes">
+            <attribute name="t-if">page_name == 'quote' or sale_order and sale_order.state == 'quotation'</attribute>
+        </xpath>
+        <xpath expr="//a[contains(@t-attf-href,'/my/orders?')]/parent::li" position="attributes">
+            <attribute name="t-elif">page_name == 'order' or sale_order and sale_order.state != 'quotation'</attribute>
+        </xpath>
+    </template>
+
+</odoo>

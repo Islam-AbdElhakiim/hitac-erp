@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         Extend pallet list: add container_id column
+    ====================================================== -->
+    <record id="view_stock_pallet_list_inherit_logistics" model="ir.ui.view">
+        <field name="name">stock.pallet.list.hitac_logistics</field>
+        <field name="model">stock.pallet</field>
+        <field name="inherit_id" ref="hitac_production.view_stock_pallet_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='batch_id']" position="after">
+                <field name="container_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ======================================================
+         Extend pallet form: add container_id + Unload button
+    ====================================================== -->
+    <record id="view_stock_pallet_form_inherit_logistics" model="ir.ui.view">
+        <field name="name">stock.pallet.form.hitac_logistics</field>
+        <field name="model">stock.pallet</field>
+        <field name="inherit_id" ref="hitac_production.view_stock_pallet_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_unload" string="Unload" type="object"
+                        invisible="status != 'loaded'"/>
+            </xpath>
+            <xpath expr="//field[@name='position_in_container']" position="before">
+                <field name="container_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

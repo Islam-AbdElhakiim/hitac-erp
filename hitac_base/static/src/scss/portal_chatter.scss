@@ -1,0 +1,18 @@
+// The OWL Chatter's sticky top bar (attach/follow row) ships a JS-computed
+// inline style (top: -1px !important; margin-top: -15px; padding-top: 20px)
+// meant to tuck it up under a taller control panel. On these customer-portal
+// pages the preceding element is just the "Communication history" <h3> with
+// its own small margin, so that -15px pull drags the bar's background up
+// over the last ~7px of the heading's own line box, visually clipping its
+// descenders (e.g. "Communication history" on the quotation/invoice/PO
+// preview pages). Only the margin-top inline property needs overriding —
+// the sticky "top" offset itself is untouched.
+//
+// This widget renders inside a shadow DOM (see the manifest's
+// portal.assets_chatter_style bundle, the only stylesheet its shadow root
+// loads), which is isolated from the main document, so an ancestor scope
+// like ".o_portal_chatter" — a light-DOM class outside the shadow
+// boundary — can't be part of this selector.
+.o-mail-Chatter-top {
+    margin-top: 0 !important;
+}

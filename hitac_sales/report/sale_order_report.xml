@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         REPORT ACTION
+         Replaces the stock "Print" action bound to the header
+         button (see views/sale_order_views.xml). Bound to the
+         model so it also shows up in the generic Print menu.
+    ====================================================== -->
+    <record id="action_report_hitac_saleorder" model="ir.actions.report">
+        <field name="name">Pro-forma / Sales Order</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hitac_sales.report_hitac_saleorder</field>
+        <field name="report_file">hitac_sales.report_hitac_saleorder</field>
+        <field name="paperformat_id" ref="hitac_base.paperformat_hitac_doc"/>
+        <field name="print_report_name">'%s - %s' % (object.state == 'proforma' and 'PI' or 'SO', object.pi_number or object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- ======================================================
+         OUTER WRAPPER — loops the recordset, sets doc per record
+    ====================================================== -->
+    <template id="report_hitac_saleorder">
+        <t t-call="web.html_container">
+            <t t-set="full_width" t-value="True"/>
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hitac_sales.report_hitac_saleorder_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- ======================================================
+         DOCUMENT — the actual printed layout, styled to match
+         the company's real pro-forma invoice template.
+    ====================================================== -->
+    <template id="report_hitac_saleorder_document">
+        <t t-set="company" t-value="doc.company_id"/>
+        <t t-set="company_partner" t-value="company.partner_id"/>
+        <t t-set="bank" t-value="company_partner.bank_ids[:1]"/>
+        <t t-set="lines" t-value="doc.order_line.filtered(lambda l: not l.display_type)"/>
+        <t t-set="hitac_logo_b64" t-value="doc._get_hitac_logo_b64()"/>
+
+        <div class="hitac-doc">
+            <style>
+                .hitac-doc {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0 auto;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 21px;
+                    line-height: 1.4;
+                    color: #222;
+                }
+                .hitac-doc table { width: 100%; border-collapse: collapse; }
+                .hitac-topbar { height: 8px; background: #b7282e; margin-bottom: 18px; }
+                .hitac-bottombar { height: 8px; background: #b7282e; margin-top: 16px; }
+                .hitac-brand-row { width: 100%; margin-bottom: 10px; }
+                .hitac-brand-row td { border: none; padding: 0; vertical-align: middle; }
+                .hitac-brand-en { font-size: 30px; font-weight: bold; color: #222; }
+                .hitac-brand-en .light { font-weight: 300; }
+                .hitac-brand-ar { font-size: 18px; color: #b7282e; font-weight: bold; padding-left: 130px; }
+                .hitac-brand-right { text-align: center; }
+                .hitac-logo { height: 78px; }
+                .hitac-brand-tag { letter-spacing: 3px; font-size: 12px; font-weight: bold; color: #1ba7dc; }
+                .hitac-title { text-align: center; font-size: 19px; font-weight: bold; text-decoration: underline; margin: 10px 0 18px 0; }
+  
+                .hitac-info td.cell { border: 1px solid #333; padding: 8px 10px; vertical-align: top; width: 50%; }
+                .hitac-info table.inner td { border: none; padding: 2px 4px; }
+                .lbl { font-weight: bold; text-decoration: underline; }
+                .b { font-weight: bold; }
+                .mt { margin-top: 8px; }
+                .hitac-items { margin-top: -1px; }
+                .hitac-items th, .hitac-items td { border: 1px solid #333; padding: 6px 8px; font-size: 12px; }
+                .hitac-items thead th { background: #bcdcee; text-align: center; font-weight: bold; }
+                .center { text-align: center; }
+                .right { text-align: right; }
+                .hitac-said { border: 1px solid #333; border-top: none; padding: 8px; text-align: center; font-weight: bold; }
+                .hitac-grid4 td, .hitac-grid2 td { border: 1px solid #333; padding: 8px 10px; vertical-align: top; }
+                .hitac-row2 { border: 1px solid #333; border-top: none; padding: 8px 10px; }
+                .sig-line { height: 50px; }
+                .hitac-footer { display: flex; justify-content: space-between; border-top: 2px solid #333; margin-top: 18px; padding-top: 6px; font-weight: bold; font-size: 11px; }
+                .hitac-footer-address { text-align: center; font-weight: bold; font-size: 11px; margin-top: 3px; }
+            </style>
+
+            <div class="hitac-topbar"/>
+
+            <table class="hitac-brand-row">
+                <tr>
+                    <td>
+                        <div class="hitac-brand-en">HITAC <span class="light">TRADING</span></div>
+                        <div class="hitac-brand-ar">هيتاك للتجارة</div>
+                    </td>
+                    <td class="hitac-brand-right">
+                        <img class="hitac-logo" t-attf-src="data:image/png;base64,#{hitac_logo_b64}"/>
+                        <div class="hitac-brand-tag">T R A D I N G</div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="hitac-title">
+                <t t-if="doc.state == 'proforma'">PROFORMA INVOICE</t>
+                <t t-elif="doc.state == 'quotation'">QUOTATION</t>
+                <t t-else="">SALES ORDER</t>
+            </div>
+
+            <table class="hitac-info">
+                <tr>
+                    <td class="cell">
+                        <div class="lbl">EXPORTER Details:</div>
+                        <div class="b" t-esc="company.name"/>
+                        <div>
+                            <t t-esc="company.street"/><t t-if="company.street"><t t-esc="', '"/></t>
+                            <t t-esc="company.city"/><t t-if="company.city"><t t-esc="', '"/></t>
+                            <t t-esc="company.country_id.name"/>
+                        </div>
+                        <div t-if="company.phone">Phone: <t t-esc="company.phone"/></div>
+                        <div t-if="company.website">Website: <t t-esc="company.website"/></div>
+                    </td>
+                    <td class="cell" rowspan="3">
+                        <div class="lbl">BUYER Details:</div>
+                        <div>NAME: <t t-esc="doc.partner_id.name"/></div>
+                        <div t-if="doc.partner_id.contact_address">ADD: <t t-esc="doc.partner_id.contact_address"/></div>
+                        <div t-if="doc.partner_id.email">Email: <t t-esc="doc.partner_id.email"/></div>
+                        <div t-if="doc.buyer_contact_name" class="mt">
+                            <t t-esc="doc.buyer_contact_title"/> : <t t-esc="doc.buyer_contact_name"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cell">
+                        <table class="inner">
+                            <tr>
+                                <td class="lbl">PI No.</td>
+                                <td><t t-esc="doc.pi_number"/></td>
+                                <td class="lbl">Date:</td>
+                                <td><span t-field="doc.date_order" t-options="{'widget': 'date'}"/></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cell">
+                        <table class="inner">
+                            <tr>
+                                <td class="lbl">Expiration date:</td>
+                                <td><span t-field="doc.validity_date" t-options="{'widget': 'date'}"/></td>
+                                <td class="lbl">Country of Origin:</td>
+                                <td><t t-esc="doc.country_of_origin"/></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="hitac-items">
+                <thead>
+                    <tr>
+                        <th>ITEM No.</th>
+                        <th>Description</th>
+                        <th>Packing</th>
+                        <th>Weight</th>
+                        <th>Units No</th>
+                        <th>RATE/Carton</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="lines" t-as="line">
+                        <td class="center" t-esc="line_index + 1"/>
+                        <td t-esc="line.name"/>
+                        <td class="center" t-esc="line.packing_type"/>
+                        <td class="center">
+                            <div t-esc="'N.G ' + ('%.0f' % line.net_weight) + ' Kg'"/>
+                            <div t-esc="'G.W ' + ('%.0f' % line.gross_weight) + ' Kg'"/>
+                        </td>
+                        <td class="center">(Total =<t t-esc="line.carton_qty"/> <t t-esc="line.packing_type"/>)</td>
+                        <td class="right"><span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
+                        <td class="right"><span t-field="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="hitac-said">
+                SAID : <t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> .
+            </div>
+
+            <table class="hitac-grid4">
+                <tr>
+                    <td>
+                        <div class="lbl">INCOTERMS :</div>
+                        <div>- <t t-esc="doc.incoterm_code"/>.</div>
+                    </td>
+                    <td>
+                        <div class="lbl">POD :</div>
+                        <div>- <t t-esc="doc.port_of_discharge"/>.</div>
+                    </td>
+                    <td>
+                        <div class="lbl">POL :</div>
+                        <div>- <t t-esc="doc.port_of_loading"/>.</div>
+                    </td>
+                    <td>
+                        <div class="lbl">Total :</div>
+                        <div>- <t t-esc="doc.total_carton_qty"/> <t t-esc="lines[:1].packing_type or 'Cartons'"/></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="hitac-row2">
+                <div class="lbl">Terms of payment:</div>
+                <div>- <t t-esc="doc.payment_term_id.name or ''"/></div>
+            </div>
+
+            <table class="hitac-grid2">
+                <tr>
+                    <td>
+                        <div class="lbl">NOTE:</div>
+                        <div t-esc="doc.validity_note"/>
+                    </td>
+                    <td>
+                        <div class="lbl">GENERAL:</div>
+                        <div t-esc="doc.general_note or '-----------------------'"/>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="hitac-grid2">
+                <tr>
+                    <td>
+                        <div class="lbl">Our BANK Details :</div>
+                        <div>Name : <t t-esc="company.name"/></div>
+                        <div t-if="bank">IBAN: <t t-esc="bank.acc_number"/></div>
+                        <div t-if="bank.bank_id">Bank: <t t-esc="bank.bank_id.name"/></div>
+                    </td>
+                    <td>
+                        <div class="lbl">SIGNATURE:</div>
+                        <div class="sig-line"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="hitac-footer">
+                <div t-if="company.phone" t-esc="company.phone"/>
+                <div t-if="company.email" t-esc="company.email"/>
+                <div t-if="company.website" t-esc="company.website"/>
+            </div>
+            <div class="hitac-footer-address" t-esc="company.street"/>
+
+            <div class="hitac-bottombar"/>
+        </div>
+    </template>
+
+</odoo>

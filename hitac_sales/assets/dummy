@@ -1,0 +1,97 @@
+https://test-axp-api.footprintwms.com/Orders?
+    $select=Id
+    &$expand=
+        ShipmentOrderLookups(
+            $select=ShipmentId;
+
+            $filter=
+                Shipment/WaveId eq null
+                and Shipment/StatusId eq 2
+                and Shipment/BackOrder ne true
+                and (
+                    Shipment/ActualWarehouseId in (1)
+                    or (
+                        Shipment/ActualWarehouseId eq null
+                        and Shipment/ExpectedWarehouseId in (1)
+                    )
+                );
+
+            $expand=
+                Shipment(
+                    $select=Id;
+
+                    $expand=
+                        Carrier(
+                            $select=Id,Name
+                        ),
+                        CarrierServiceType(
+                            $select=Id,Name
+                        ),
+                        ActualWarehouse(
+                            $select=Id,Name
+                        )
+                )
+        ),
+
+        Account(
+            $select=Id,LookupCode,Name,TypeId
+        ),
+
+        OrderClass(
+            $select=Id,Name
+        ),
+
+        PreferredWarehouse(
+            $select=Id,Name
+        ),
+
+        PreferredCarrier(
+            $select=Id,Name
+        ),
+
+        PreferredCarrierServiceType(
+            $select=Id,Name
+        ),
+
+        Project(
+            $select=Id,LookupCode
+        ),
+
+        OrderLines(
+            $select=MaterialId,PackagedId,PackagedAmount;
+
+            $expand=
+                Material(
+                    $select=LookupCode
+                ),
+                InventoryMeasurementUnit(
+                    $select=ShortName
+                )
+        )
+
+    &$filter=
+        OrderClass/OrderTypeId eq 2
+        and OrderStatusId eq 2
+
+        and ShipmentOrderLookups/any(
+            sol:
+                sol/Shipment/WaveId eq null
+                and sol/Shipment/StatusId eq 2
+                and sol/Shipment/BackOrder ne true
+        )
+
+        and (
+            ShipmentOrderLookups/any(
+                sol:
+                    sol/Shipment/ActualWarehouseId in (1)
+                    or (
+                        sol/Shipment/ActualWarehouseId eq null
+                        and sol/Shipment/ExpectedWarehouseId in (1)
+                    )
+            )
+
+            or (
+                not ShipmentOrderLookups/any()
+                and PreferredWarehouseId in (1)
+            )
+        )

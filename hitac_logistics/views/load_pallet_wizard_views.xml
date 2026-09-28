@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_load_pallet_wizard_form" model="ir.ui.view">
+        <field name="name">logistics.load.pallet.wizard.form</field>
+        <field name="model">logistics.load.pallet.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Load Pallets">
+                <sheet>
+                    <group>
+                        <field name="container_id" readonly="1"/>
+                    </group>
+                    <group string="Select Pallets">
+                        <field name="pallet_ids" nolabel="1"
+                               domain="[('status', 'in', ['ready', 'loaded'])]"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <group string="Pallets">
+                        <field name="pallet_ids" nolabel="1"
+                               widget="many2many"
+                               domain="[('status', 'in', ['ready', 'loaded'])]">
+                            <list>
+                                <field name="name"/>
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                                <field name="batch_id"/>
+                                <field name="container_id" string="Current Container" optional="show"/>
+                                <field name="status" widget="badge"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_load" string="Load" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

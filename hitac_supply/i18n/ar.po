@@ -1,0 +1,277 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hitac_supply
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-08 15:44+0000\n"
+"PO-Revision-Date: 2026-09-08 15:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hitac_supply
+#: model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_orders_all
+msgid "All Supply Orders"
+msgstr "جميع أوامر التوريد"
+
+#. module: hitac_supply
+#. odoo-python
+#: code:addons/hitac_supply/models/supply_order.py:0
+msgid "Cannot mark \"%s\" as received: no shipments have been recorded."
+msgstr "لا يمكن تعليم \"%s\" كمُستلم: لم يتم تسجيل أي شحنات."
+
+#. module: hitac_supply
+#. odoo-python
+#: code:addons/hitac_supply/models/supply_order.py:0
+msgid "Cannot mark \"%s\" as received: received quantity is missing on: %s"
+msgstr "لا يمكن تعليم \"%s\" كمُستلم: الكمية المستلمة غير محددة في: %s"
+
+#. module: hitac_supply
+#. odoo-python
+#: code:addons/hitac_supply/models/supply_order.py:0 model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Create Return Shipment"
+msgstr "إنشاء شحنة مرتجعة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__create_uid model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__create_date model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__destination
+msgid "Destination"
+msgstr "الوجهة"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Details"
+msgstr "التفاصيل"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_product_template__display_name model:ir.model.fields,field_description:hitac_supply.field_supply_order__display_name model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__expected_date model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__expected_date
+msgid "Expected Date"
+msgstr "التاريخ المتوقع"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_product_product__hitac_type model:ir.model.fields,field_description:hitac_supply.field_product_template__hitac_type
+msgid "HITAC Type"
+msgstr "نوع هيتاك"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__has_return model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Has Return"
+msgstr "يحتوي على مرتجع"
+
+#. module: hitac_supply
+#: model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_root
+msgid "Hitac Supply"
+msgstr "توريد هيتاك"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_product_template__id model:ir.model.fields,field_description:hitac_supply.field_supply_order__id model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: hitac_supply
+#: model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__state__in_progress model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__write_uid model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__write_date model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Mark Received"
+msgstr "تعليم كمُستلم"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Mark Returned"
+msgstr "تعليم كمرتجع"
+
+#. module: hitac_supply
+#. odoo-python
+#: code:addons/hitac_supply/models/supply_order.py:0 model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__state__new model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "New"
+msgstr "جديد"
+
+#. module: hitac_supply
+#. odoo-python
+#: code:addons/hitac_supply/models/supply_shipment.py:0
+msgid "New Shipment"
+msgstr "شحنة جديدة"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_packaging model:ir.model.fields.selection,name:hitac_supply.selection__product_template__hitac_type__packaging model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__type__packaging model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_packaging model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Packaging"
+msgstr "التعبئة والتغليف"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__packing_house_id model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Packing House"
+msgstr "بيت التعبئة"
+
+#. module: hitac_supply
+#: model:ir.model.fields.selection,name:hitac_supply.selection__supply_shipment__status__pending model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. module: hitac_supply
+#: model:ir.model,name:hitac_supply.model_product_template model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__product_id model:ir.model.fields.selection,name:hitac_supply.selection__product_template__hitac_type__product model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__type__product model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Product"
+msgstr "منتج"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_products model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_products
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_form
+msgid "Receipt"
+msgstr "الاستلام"
+
+#. module: hitac_supply
+#: model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__state__received model:ir.model.fields.selection,name:hitac_supply.selection__supply_shipment__status__received model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Received"
+msgstr "مُستلم"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__received_quantity
+msgid "Received Quantity"
+msgstr "الكمية المستلمة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__receiver_user_id
+msgid "Receiver"
+msgstr "المستلم"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__name model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__name model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Reset to New"
+msgstr "إعادة التعيين إلى جديد"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__is_return
+msgid "Return Shipment"
+msgstr "شحنة مرتجعة"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Return Shipments"
+msgstr "الشحنات المرتجعة"
+
+#. module: hitac_supply
+#: model:ir.model.fields.selection,name:hitac_supply.selection__supply_order__state__returned model:ir.model.fields.selection,name:hitac_supply.selection__supply_shipment__status__returned model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Returned"
+msgstr "مرتجع"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_returns model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_returns
+msgid "Returns"
+msgstr "المرتجعات"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__sales_order_ids model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Sales Orders"
+msgstr "أوامر البيع"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_form
+msgid "Shipment Info"
+msgstr "بيانات الشحنة"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_shipment model:ir.model.fields,field_description:hitac_supply.field_supply_order__shipment_ids model:ir.ui.menu,name:hitac_supply.menu_hitac_shipments_root model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Shipments"
+msgstr "الشحنات"
+
+#. module: hitac_supply
+#: model:ir.model.fields.selection,name:hitac_supply.selection__supply_shipment__status__shipped model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Shipped"
+msgstr "تم الشحن"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form
+msgid "Start"
+msgstr "بدء"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__state model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__status model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__supplier_id model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__supplier_id model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Supplier"
+msgstr "مورد"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_suppliers model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_suppliers
+msgid "Suppliers"
+msgstr "الموردون"
+
+#. module: hitac_supply
+#: model:ir.model,name:hitac_supply.model_supply_order model:ir.model.fields,field_description:hitac_supply.field_supply_shipment__supply_order_id model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_form model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Supply Order"
+msgstr "أمر توريد"
+
+#. module: hitac_supply
+#: model:ir.actions.act_window,name:hitac_supply.action_supply_order model:ir.ui.menu,name:hitac_supply.menu_hitac_supply_orders model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_list model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Supply Orders"
+msgstr "أوامر التوريد"
+
+#. module: hitac_supply
+#: model:ir.model,name:hitac_supply.model_supply_shipment model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_form
+msgid "Supply Shipment"
+msgstr "شحنة التوريد"
+
+#. module: hitac_supply
+#: model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_list model_terms:ir.ui.view,arch_db:hitac_supply.supply_shipment_view_search
+msgid "Supply Shipments"
+msgstr "شحنات التوريد"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__total_received_quantity
+msgid "Total Received Qty"
+msgstr "إجمالي الكمية المستلمة"
+
+#. module: hitac_supply
+#: model:ir.model.fields,field_description:hitac_supply.field_supply_order__type model_terms:ir.ui.view,arch_db:hitac_supply.supply_order_view_search
+msgid "Type"
+msgstr "النوع"

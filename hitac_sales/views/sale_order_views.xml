@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         FORM VIEW
+    ====================================================== -->
+    <record id="view_sale_order_form_hitac" model="ir.ui.view">
+        <field name="name">hitac.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <!-- Must apply after sale_stock (and any other module extending the
+             'sale_shipping' group / other_information page) so those edits
+             land before we relocate the group into our own Shipping tab.
+             Without this, whichever view happens to have the lower db id
+             wins the tie at the default priority (16), which is install-
+             order-dependent and breaks the moment stock/sale_stock installs
+             after hitac_sales. -->
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+
+            <!-- 1. Replace the entire header to own the buttons + statusbar.
+                 Each pipeline stage's "next step" button is paired with a
+                 split dropdown (same primary action repeated, the matching
+                 Reset button(s), Preview, Print, Cancel) instead of every
+                 button sitting side by side in the header — that was
+                 crowding out the statusbar on smaller screens. Only one
+                 group is ever visible at a time (states are mutually
+                 exclusive), so exactly one primary+dropdown renders. -->
+            <xpath expr="//header" position="replace">
+                <header>
+
+                    <!-- ── Quotation (export): Send Pro-forma ──────────── -->
+                    <div class="btn-group" role="group" invisible="state != 'quotation' or order_type != 'export'">
+                        <button name="action_send_proforma" string="Send Pro-forma" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_send_proforma">Send Pro-forma</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_draft" invisible="state not in ['quotation', 'proforma', 'confirmed', 'cancelled']">Reset to Quotation</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+                    <button name="action_quotation_send" string="Send by Email" type="object" class="btn-secondary" context="{'validate_analytic': True}" invisible="not id or state != 'quotation' or order_type != 'export'"/>
+
+                    <!-- ── Quotation (local) / Pro-forma (export): Confirm ── -->
+                    <div class="btn-group" role="group" invisible="not ((state == 'quotation' and order_type == 'local') or (state == 'proforma' and order_type == 'export'))">
+                        <button name="action_confirm_order" string="Confirm Order" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_confirm_order">Confirm Order</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_draft" invisible="state not in ['quotation', 'proforma', 'confirmed', 'cancelled']">Reset to Quotation</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+                    <button name="action_quotation_send" string="Send by Email" type="object" class="btn-secondary" context="{'validate_analytic': True}" invisible="not id or state != 'quotation' or order_type != 'local'"/>
+                    <button name="action_quotation_send" string="Send by Email" type="object" class="btn-secondary" context="{'proforma': True, 'validate_analytic': True}" invisible="not id or state != 'proforma' or order_type != 'export'"/>
+
+                    <!-- ── Confirmed (supply required): To Supply ──────── -->
+                    <div class="btn-group" role="group" invisible="state != 'confirmed' or not is_supply_required">
+                        <button name="action_to_supply" string="To Supply" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_to_supply">To Supply</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_draft" invisible="state not in ['quotation', 'proforma', 'confirmed', 'cancelled']">Reset to Quotation</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+
+                    <!-- ── Confirmed (no supply) / Supply: To Production ── -->
+                    <div class="btn-group" role="group" invisible="not ((state == 'confirmed' and not is_supply_required) or state == 'supply')">
+                        <button name="action_to_production" string="To Production" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_to_production">To Production</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_draft" invisible="state not in ['quotation', 'proforma', 'confirmed', 'cancelled']">Reset to Quotation</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_confirmed" invisible="not (state == 'supply' or (state == 'production' and not is_supply_required))">Reset to Confirmed</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+
+                    <!-- ── Production: To Shipping ──────────────────────── -->
+                    <div class="btn-group" role="group" invisible="state != 'production'">
+                        <button name="action_to_shipping" string="To Shipping" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_to_shipping">To Shipping</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_confirmed" invisible="not (state == 'supply' or (state == 'production' and not is_supply_required))">Reset to Confirmed</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_supply" invisible="state != 'production' or not is_supply_required">Reset to Supply</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+
+                    <!-- ── Shipping: Mark as Departed ────────────────────── -->
+                    <div class="btn-group" role="group" invisible="state != 'shipping'">
+                        <button name="action_to_departed" string="Mark as Departed" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_to_departed">Mark as Departed</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_production" invisible="state != 'shipping'">Reset to Production</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                            <a class="dropdown-item" type="object" name="action_cancel_order" confirm="Are you sure you want to cancel this order?" invisible="state not in ['quotation', 'proforma', 'confirmed', 'supply', 'production', 'shipping']">Cancel Order</a>
+                        </div>
+                    </div>
+
+                    <!-- ── Departed: Mark as Paid (not cancellable, so no
+                         Cancel Order entry) ── -->
+                    <div class="btn-group" role="group" invisible="state != 'departed'">
+                        <button name="action_to_paid" string="Mark as Paid" type="object" class="btn-primary"/>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" type="object" name="action_to_paid">Mark as Paid</a>
+                            <a class="dropdown-item" type="object" name="action_reset_to_shipping" invisible="state != 'departed'">Reset to Shipping</a>
+                            <a class="dropdown-item" type="object" name="action_preview_sale_order" invisible="not id">Preview</a>
+                            <a class="dropdown-item" type="action" name="hitac_sales.action_report_hitac_saleorder" invisible="not id">Print</a>
+                        </div>
+                    </div>
+
+                    <!-- ── Paid / Cancelled: terminal states, no forward
+                         action to pair a dropdown with — plain fallback
+                         controls instead. ── -->
+                    <button name="action_reset_to_departed" string="Reset to Departed" type="object" invisible="state != 'paid'"/>
+                    <button name="action_reset_to_draft" string="Reset to Quotation" type="object" invisible="state != 'cancelled'"/>
+                    <button name="action_preview_sale_order" string="Preview" type="object" class="btn-secondary" invisible="not id or state not in ('paid', 'cancelled')"/>
+                    <button name="hitac_sales.action_report_hitac_saleorder" string="Print" type="action" invisible="not id or state not in ('paid', 'cancelled')"/>
+
+                    <!-- ── Invoicing (removed by the header replace above;
+                         restored now that invoice_status computes correctly
+                         for hitac's own states, see CONFIRMED_STATES in
+                         models/sale_order.py) ── -->
+                    <button string="Create Invoice"
+                            id="create_invoice"
+                            name="%(sale.action_view_sale_advance_payment_inv)d"
+                            type="action"
+                            class="btn-primary"
+                            invisible="invoice_status != 'to invoice'"/>
+                    <button string="Create Invoice"
+                            id="create_invoice_percentage"
+                            name="%(sale.action_view_sale_advance_payment_inv)d"
+                            type="action"
+                            context="{'default_advance_payment_method': 'percentage'}"
+                            invisible="invoice_status != 'no' or state in ['quotation', 'proforma']"/>
+
+                    <!-- Status bar: proforma is only meaningful for export, but
+                         showing all states keeps the progress bar consistent. -->
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="quotation,proforma,confirmed,production,shipping,departed,paid"/>
+
+                </header>
+            </xpath>
+
+            <!-- 1.5 Status ribbons for Departed / Paid. bg_color takes a CSS
+                 class name: text-bg-success is a standard Bootstrap class
+                 (green); text-bg-hitac-purple is our own, defined in
+                 static/src/scss/ribbon.scss since Bootstrap has no built-in
+                 purple. -->
+            <xpath expr="//div[@name='button_box']" position="after">
+                <widget name="web_ribbon" title="Departed" bg_color="text-bg-hitac-purple" invisible="state != 'departed'"/>
+                <widget name="web_ribbon" title="Paid" bg_color="text-bg-success" invisible="state != 'paid'"/>
+                <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger" invisible="state != 'cancelled'"/>
+            </xpath>
+
+            <!-- 2. Add Order Type right after the Customer (partner_id) field -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="order_type" readonly="state not in ('quotation', 'proforma')"/>
+            </xpath>
+
+            <!-- 3. Add Supply fields to the Other Info tab, and rename that
+                 tab to "Details". Inserted right after the Sales group
+                 (rather than appended to the page) so it lands inside the
+                 same 2-column group as Sales/Invoicing/Tracking, giving:
+                 Sales | Supply
+                 Invoicing | Tracking -->
+            <xpath expr="//page[@name='other_information']" position="attributes">
+                <attribute name="string">Details</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sales_person']" position="after">
+                <group string="Supply">
+                    <field name="is_supply_required"/>
+                    <!-- Not marked required="" here: that would validate on
+                         every save while in Supply, including a save
+                         triggered by "Reset to Confirmed" — which must stay
+                         allowed even with no supply order linked. The real
+                         gate is the check in action_to_production() below,
+                         which only fires on the forward transition. -->
+                    <field name="supply_order_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+
+            <!-- 4. Add Production / Shipping / Finance tabs to the notebook.
+                 Production comes before Shipping (goods are produced before
+                 they ship); Logistics was dropped as its own tab — no fields
+                 lived there yet. -->
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Production" name="hitac_production">
+                    <group>
+                        <group string="Batch &amp; Packing">
+                            <field name="packing_house"/>
+                            <field name="batch_reference"/>
+                            <field name="production_responsible"/>
+                        </group>
+                        <group string="Containers">
+                            <field name="containers_reference"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="production_notes"/>
+                    </group>
+                </page>
+
+                <page string="Shipping" name="hitac_shipping">
+                    <group>
+                        <group string="Pro-forma / Document Details">
+                            <field name="pi_number" readonly="1"/>
+                            <field name="country_of_origin"/>
+                            <field name="incoterm_code"/>
+                            <field name="port_of_loading"/>
+                            <field name="port_of_discharge"/>
+                            <field name="total_carton_qty" readonly="1"/>
+                        </group>
+                        <group string="Buyer Contact">
+                            <field name="buyer_contact_title"/>
+                            <field name="buyer_contact_name"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Transport Details">
+                            <field name="vessel_name"/>
+                            <field name="carrier_name"/>
+                            <field name="bl_number"/>
+                            <field name="bl_document" widget="binary" filename="bl_document_filename"/>
+                            <field name="bl_document_filename" invisible="1"/>
+                        </group>
+                        <group string="Schedule &amp; Volume">
+                            <field name="etd_date"/>
+                            <field name="eta_date"/>
+                            <field name="total_cbm"/>
+                            <field name="customs_broker"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="validity_note"/>
+                        <field name="general_note"/>
+                    </group>
+                </page>
+
+                <page string="Finance &amp; Documents" name="hitac_finance_docs">
+                    <group>
+                        <group string="Deposit">
+                            <field name="deposit_paid"/>
+                            <field name="deposit_amount"
+                                   invisible="not deposit_paid"/>
+                        </group>
+                        <group string="Letter of Credit">
+                            <field name="lc_issued"/>
+                            <field name="lc_document"
+                                   widget="binary"
+                                   filename="lc_document_filename"
+                                   invisible="not lc_issued"/>
+                            <field name="lc_document_filename" invisible="True"/>
+                        </group>
+                    </group>
+                </page>
+
+            </xpath>
+
+            <!-- 5. Relocate the Delivery fields (added by sale_stock under
+                 the base 'sale_shipping' group in Other Info) into our own
+                 Shipping tab. Must be a separate top-level xpath: a
+                 position="move" nested two levels deep inside a freshly
+                 inserted node is not resolved by the inheritance engine. -->
+            <xpath expr="//page[@name='hitac_shipping']" position="inside">
+                <xpath expr="//group[@name='sale_shipping']" position="move"/>
+            </xpath>
+
+            <!-- 6. Per-line shipment columns used by the pro-forma/order print
+                 (packing type, carton count, net/gross weight). -->
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="after">
+                <field name="packing_type" optional="show"/>
+                <field name="carton_qty" optional="show"/>
+                <field name="net_weight" optional="show"/>
+                <field name="gross_weight" optional="show"/>
+            </xpath>
+
+            <!-- 7. Lock order lines once the order is Confirmed or further
+                 along (Supply/Production/Shipping/Departed/Paid). The base
+                 condition ("state == 'cancel' or locked") is dead here since
+                 hitac_sales' state field has no 'cancel' value and nothing
+                 sets 'locked' anymore. "Reset to Quotation" (Confirmed only,
+                 see header button above) is the way back to editable lines. -->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+
+            <!-- 8. Lock the general-information fields above the notebook
+                 (customer, order type, dates, pricelist, payment terms) once
+                 Confirmed or later — same threshold as the order lines. Each
+                 of these already carries its own base readonly condition
+                 ("state in ['cancel', 'sale']"), which is dead under hitac's
+                 state field and must be replaced outright rather than added
+                 alongside, since a field's own readonly overrides — it does
+                 not combine with — any ancestor group's readonly. Notebook
+                 tabs (Other Info, Shipping, Production, etc.) are untouched
+                 and stay editable regardless of state. -->
+            <xpath expr="//field[@name='partner_id'][@widget='res_partner_many2one']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <!-- date_order appears twice (a base.group_no_one "Quotation Date"
+                 variant and the default "Order Date" one shown to regular
+                 users) — target each explicitly rather than relying on a
+                 single xpath matching both. -->
+            <xpath expr="//field[@name='date_order'][@groups='base.group_no_one']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order'][not(@groups)]" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <!-- pricelist_id also appears twice; the second is a permanently
+                 invisible="1" technical duplicate (shown only when the
+                 pricelist multi-feature group is disabled) and doesn't need
+                 locking. -->
+            <xpath expr="//field[@name='pricelist_id'][not(@groups)]" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="readonly">state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+            <!-- "Update Prices" writes to order lines directly from this
+                 button, bypassing the order_line widget's own readonly —
+                 gate it on the same threshold so it can't be used as a
+                 backdoor around the lock. -->
+            <xpath expr="//button[@name='action_update_prices']" position="attributes">
+                <attribute name="invisible">not show_update_pricelist or state not in ('quotation', 'proforma')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================================================
+         LIST (TREE) VIEW
+    ====================================================== -->
+    <record id="view_sale_order_tree_hitac" model="ir.ui.view">
+        <field name="name">hitac.sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <!-- Insert order_type column right after the partner column -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="order_type"/>
+            </xpath>
+
+            <!-- Show the Status column by default (base leaves it
+                 optional="hide"), and replace its decorations — hardcoded
+                 to base states 'sale'/'draft'/'sent', none of which exist
+                 under hitac_sales' own state field — with hitac's actual
+                 pipeline. -->
+            <field name="state" position="attributes">
+                <attribute name="optional">show</attribute>
+                <attribute name="decoration-info">state in ('quotation', 'proforma')</attribute>
+                <attribute name="decoration-primary">state in ('confirmed', 'supply', 'production', 'shipping')</attribute>
+                <attribute name="decoration-success">state in ('departed', 'paid')</attribute>
+                <attribute name="decoration-danger">state == 'cancelled'</attribute>
+            </field>
+
+            <!-- Row greyout was hardcoded to base's state == 'cancel', which
+                 no longer exists — same dead-base-state pattern as above. -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-muted">state == 'cancelled'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Order Type column is redundant on the Export Orders / Local-Market
+         Orders grids (menus.xml) — each grid is already filtered to a
+         single order_type, so the column always shows the same value.
+         Pinned as the list view_id on those two actions only; every other
+         sale.order list (Quotations, generic Orders, etc.) keeps the
+         column via view_sale_order_tree_hitac above. -->
+    <record id="view_sale_order_tree_hitac_no_order_type" model="ir.ui.view">
+        <field name="name">hitac.sale.order.tree.no.order.type</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="view_sale_order_tree_hitac"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_type']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ======================================================
+         SEARCH VIEW
+    ====================================================== -->
+    <record id="view_sale_order_search_hitac" model="ir.ui.view">
+        <field name="name">hitac.sale.order.search.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <!-- Add order_type as a searchable field -->
+            <xpath expr="//search/field[last()]" position="after">
+                <field name="order_type" string="Order Type"/>
+            </xpath>
+            <!-- Add filter shortcuts -->
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator/>
+                <filter name="filter_export_orders"
+                        string="Export Orders"
+                        domain="[('order_type', '=', 'export')]"/>
+                <filter name="filter_local_orders"
+                        string="Local Orders"
+                        domain="[('order_type', '=', 'local')]"/>
+                <separator/>
+                <filter name="filter_state_quotation"
+                        string="Quotation"
+                        domain="[('state', '=', 'quotation')]"/>
+                <filter name="filter_state_confirmed"
+                        string="Confirmed"
+                        domain="[('state', '=', 'confirmed')]"/>
+                <filter name="filter_state_production"
+                        string="In Production"
+                        domain="[('state', '=', 'production')]"/>
+                <filter name="filter_state_shipping"
+                        string="Shipping"
+                        domain="[('state', '=', 'shipping')]"/>
+                <filter name="filter_state_paid"
+                        string="Paid"
+                        domain="[('state', '=', 'paid')]"/>
+                <filter name="filter_state_cancelled"
+                        string="Cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+            </xpath>
+            <!-- Add group-by order_type -->
+            <xpath expr="//group" position="inside">
+                <filter name="group_by_order_type"
+                        string="Order Type"
+                        context="{'group_by': 'order_type'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ======================================================
+         DISABLE INCOMPATIBLE BASE ACTIONS
+         "Mark Quotation as Sent" (Actions menu, list/kanban/form) always
+         checks order.state == 'draft', a value that no longer exists under
+         hitac_sales' own state field (spelled 'quotation') - it would raise
+         "Only draft orders can be marked as sent directly." for every single
+         hitac order. There is no "sent" stage in hitac's workflow (export
+         orders use Pro-forma instead), so unbind it instead of reimplementing.
+    ====================================================== -->
+    <record id="sale.model_sale_order_action_quotation_sent" model="ir.actions.server">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+</odoo>

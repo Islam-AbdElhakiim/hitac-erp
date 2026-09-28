@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Replaces the branding that used to be patched directly into
+        addons/web/views/webclient_templates.xml. Done as view inheritance so it
+        ships with the module instead of the Odoo source tree.
+    -->
+    <template id="layout_hitac_branding" inherit_id="web.layout" name="Hitac: browser title and favicon">
+        <xpath expr="//title" position="replace">
+            <title t-esc="title or 'Hitac'"/>
+        </xpath>
+        <!--
+            x_icon still wins when set (scoped apps, and the per-company favicon),
+            this only changes the fallback.
+        -->
+        <xpath expr="//link[@rel='shortcut icon']" position="replace">
+            <link type="image/svg+xml" rel="shortcut icon"
+                  t-att-href="x_icon or '/hitac_base/static/img/hitac_favicon.svg'"/>
+        </xpath>
+    </template>
+
+    <template id="webclient_offline_hitac_branding" inherit_id="web.webclient_offline" name="Hitac: offline page branding">
+        <!-- Odoo only allows a whitelist of attributes as xpath selectors ('alt' is not
+             one of them), so the logo is addressed through its parent's class. -->
+        <xpath expr="//div[hasclass('card')]/img" position="replace">
+            <img src="/hitac_base/static/img/hitac.png" alt="Hitac logo"/>
+        </xpath>
+        <xpath expr="//div[hasclass('card')]/h1" position="replace">
+            <h1>You are offline!</h1>
+        </xpath>
+    </template>
+
+</odoo>

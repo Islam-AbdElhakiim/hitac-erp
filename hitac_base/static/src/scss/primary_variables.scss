@@ -1,0 +1,28 @@
+/*
+* Hitac brand variables.
+*
+* Contributed to the `web._assets_primary_variables` bundle from this module's
+* manifest, so it loads after Odoo's own primary_variables.scss and after every
+* dependency's contribution — late enough to win, early enough that the rest of
+* the SCSS (navbar, loading indicator, ...) compiles against these values.
+*
+* Keeping this here rather than patching addons/web/ means the branding travels
+* with the module and the Odoo tree stays pristine for upstream pulls.
+*/
+
+// Core Odoo brand color. Drives the navbar background and the loading
+// indicator (web/static/src/webclient/loading_indicator/loading_indicator.scss
+// uses $o-brand-odoo directly).
+$o-brand-odoo: #3b90ca; // Baby blue
+
+// Primary button/action color (drives Bootstrap's $primary, so active nav
+// pills, focus rings, etc. follow) — same RGB(59, 144, 202) as above.
+// NOTE: .btn-primary itself needs btn_primary.scss as well; see that file for why.
+$o-brand-primary: $o-brand-odoo;
+
+// Navbar sizing — height/padding left at Odoo's own defaults (46px / 0px);
+// a 65px/8px override here previously made the bar noticeably taller than
+// the menu items inside it, since entry height is computed as
+// navbar-height minus padding (see navbar.variables.scss).
+$o-navbar-font-size: 16px;
+$o-navbar-background: $o-brand-odoo;

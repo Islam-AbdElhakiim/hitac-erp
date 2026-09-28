@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- =========================================
+         Administration (System Admin / Hitac Admin only —
+         not tied to a specific business module, so it keeps its own
+         standalone section instead of joining the per-module ones below).
+    ========================================== -->
+    <record id="module_category_hitac" model="ir.module.category">
+        <field name="name">Hitac Administration</field>
+        <field name="description">Hitac ERP System Administration</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="privilege_hitac_administration" model="res.groups.privilege">
+        <field name="name">Administration</field>
+        <field name="category_id" ref="module_category_hitac" />
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="group_sys_admin" model="res.groups">
+        <field name="name">System Admin</field>
+        <field name="privilege_id" ref="privilege_hitac_administration" />
+        <field name="implied_ids" eval="[Command.set([ref('base.group_system')])]" />
+    </record>
+
+    <!-- =========================================
+         Per-module categories (Odoo 19: category → privilege → group).
+         Each business module gets its own section in the Access Rights
+         tab, holding two privileges:
+           - "Security Group": the module's User / Manager tier.
+           - "Access Level": which records that tier can see/edit,
+             enforced via the ir.rule records in each module's own
+             security/ir_rules.xml.
+    ========================================== -->
+
+    <!-- Sales -->
+    <record id="module_category_hitac_sales" model="ir.module.category">
+        <field name="name">Hitac Sales</field>
+        <field name="description">Hitac Sales access rights</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="privilege_hitac_sales" model="res.groups.privilege">
+        <field name="name">Security Group</field>
+        <field name="category_id" ref="module_category_hitac_sales" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_sales_user" model="res.groups">
+        <field name="name">Hitac Sales User</field>
+        <field name="privilege_id" ref="privilege_hitac_sales" />
+    </record>
+
+    <record id="group_hitac_sales_manager" model="res.groups">
+        <field name="name">Hitac Sales Manager</field>
+        <field name="privilege_id" ref="privilege_hitac_sales" />
+        <field name="implied_ids" eval="[Command.link(ref('hitac_base.group_hitac_sales_user'))]" />
+    </record>
+
+    <record id="privilege_hitac_sales_access" model="res.groups.privilege">
+        <field name="name">Access Level</field>
+        <field name="category_id" ref="module_category_hitac_sales" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_sales_access_own" model="res.groups">
+        <field name="name">Own Documents Only</field>
+        <field name="privilege_id" ref="privilege_hitac_sales_access" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_sales_access_read_all" model="res.groups">
+        <field name="name">Own &amp; Others: Read Only</field>
+        <field name="privilege_id" ref="privilege_hitac_sales_access" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_sales_access_full" model="res.groups">
+        <field name="name">Own &amp; All: Full Access</field>
+        <field name="privilege_id" ref="privilege_hitac_sales_access" />
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Supply -->
+    <record id="module_category_hitac_supply" model="ir.module.category">
+        <field name="name">Hitac Supply</field>
+        <field name="description">Hitac Supply access rights</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="privilege_hitac_supply" model="res.groups.privilege">
+        <field name="name">Security Group</field>
+        <field name="category_id" ref="module_category_hitac_supply" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_supply_user" model="res.groups">
+        <field name="name">Hitac Supply User</field>
+        <field name="privilege_id" ref="privilege_hitac_supply" />
+    </record>
+
+    <record id="group_hitac_supply_manager" model="res.groups">
+        <field name="name">Hitac Supply Manager</field>
+        <field name="privilege_id" ref="privilege_hitac_supply" />
+        <field name="implied_ids" eval="[Command.link(ref('hitac_base.group_hitac_supply_user'))]" />
+    </record>
+
+    <record id="privilege_hitac_supply_access" model="res.groups.privilege">
+        <field name="name">Access Level</field>
+        <field name="category_id" ref="module_category_hitac_supply" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_supply_access_own" model="res.groups">
+        <field name="name">Own Documents Only</field>
+        <field name="privilege_id" ref="privilege_hitac_supply_access" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_supply_access_read_all" model="res.groups">
+        <field name="name">Own &amp; Others: Read Only</field>
+        <field name="privilege_id" ref="privilege_hitac_supply_access" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_supply_access_full" model="res.groups">
+        <field name="name">Own &amp; All: Full Access</field>
+        <field name="privilege_id" ref="privilege_hitac_supply_access" />
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Production -->
+    <record id="module_category_hitac_production" model="ir.module.category">
+        <field name="name">Hitac Production</field>
+        <field name="description">Hitac Production access rights</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="privilege_hitac_production" model="res.groups.privilege">
+        <field name="name">Security Group</field>
+        <field name="category_id" ref="module_category_hitac_production" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_production_user" model="res.groups">
+        <field name="name">Hitac Production User</field>
+        <field name="privilege_id" ref="privilege_hitac_production" />
+    </record>
+
+    <record id="group_hitac_production_manager" model="res.groups">
+        <field name="name">Hitac Production Manager</field>
+        <field name="privilege_id" ref="privilege_hitac_production" />
+        <field name="implied_ids"
+            eval="[Command.link(ref('hitac_base.group_hitac_production_user'))]" />
+    </record>
+
+    <record id="privilege_hitac_production_access" model="res.groups.privilege">
+        <field name="name">Access Level</field>
+        <field name="category_id" ref="module_category_hitac_production" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_production_access_own" model="res.groups">
+        <field name="name">Own Documents Only</field>
+        <field name="privilege_id" ref="privilege_hitac_production_access" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_production_access_read_all" model="res.groups">
+        <field name="name">Own &amp; Others: Read Only</field>
+        <field name="privilege_id" ref="privilege_hitac_production_access" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_production_access_full" model="res.groups">
+        <field name="name">Own &amp; All: Full Access</field>
+        <field name="privilege_id" ref="privilege_hitac_production_access" />
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Logistics -->
+    <record id="module_category_hitac_logistics" model="ir.module.category">
+        <field name="name">Hitac Logistics</field>
+        <field name="description">Hitac Logistics access rights</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="privilege_hitac_logistics" model="res.groups.privilege">
+        <field name="name">Security Group</field>
+        <field name="category_id" ref="module_category_hitac_logistics" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_logistics_user" model="res.groups">
+        <field name="name">Hitac Logistics User</field>
+        <field name="privilege_id" ref="privilege_hitac_logistics" />
+    </record>
+
+    <record id="group_hitac_logistics_manager" model="res.groups">
+        <field name="name">Hitac Logistics Manager</field>
+        <field name="privilege_id" ref="privilege_hitac_logistics" />
+        <field name="implied_ids"
+            eval="[Command.link(ref('hitac_base.group_hitac_logistics_user'))]" />
+    </record>
+
+    <record id="privilege_hitac_logistics_access" model="res.groups.privilege">
+        <field name="name">Access Level</field>
+        <field name="category_id" ref="module_category_hitac_logistics" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_logistics_access_own" model="res.groups">
+        <field name="name">Own Documents Only</field>
+        <field name="privilege_id" ref="privilege_hitac_logistics_access" />
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_hitac_logistics_access_read_all" model="res.groups">
+        <field name="name">Own &amp; Others: Read Only</field>
+        <field name="privilege_id" ref="privilege_hitac_logistics_access" />
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_hitac_logistics_access_full" model="res.groups">
+        <field name="name">Own &amp; All: Full Access</field>
+        <field name="privilege_id" ref="privilege_hitac_logistics_access" />
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- =========================================
+         Admin (all privileges + implied access to all users)
+    ========================================== -->
+    <record id="group_hitac_admin" model="res.groups">
+        <field name="name">Hitac Admin</field>
+        <field name="privilege_id" ref="privilege_hitac_administration" />
+        <!-- base.group_system: needed to actually manage users (create/edit
+             res.users, reach Settings > Users & Companies). Does NOT expose
+             Apps/Technical/Dashboards/Link Tracker — those stay hard-locked
+             to group_sys_admin specifically (menu_overrides.xml), regardless
+             of this group. Assigning group_sys_admin itself to a user is
+             separately blocked in code (models/res_users.py) unless the
+             acting user already holds it. -->
+        <field name="implied_ids"
+            eval="[
+        Command.link(ref('hitac_base.group_hitac_sales_manager')),
+        Command.link(ref('hitac_base.group_hitac_supply_manager')),
+        Command.link(ref('hitac_base.group_hitac_production_manager')),
+        Command.link(ref('hitac_base.group_hitac_logistics_manager')),
+        Command.link(ref('base.group_system')),
+        Command.link(ref('account.group_account_invoice'))
+        ]" />
+        <!-- Note: base.group_system natively implies base.group_no_one
+             (Odoo's own "Technical Features" toggle) — Hitac Admin gets it
+             transitively through group_system regardless of anything set
+             here; there's no way to grant group_system without it. Not
+             relied on for anything — see menu_overrides.xml, which exposes
+             "Groups" directly instead, independent of developer mode. -->
+        <!-- Deliberately NOT given any of the per-module "Access Level"
+             groups above: an admin who belongs to none of a model's
+             Access Level groups is simply not affected by those ir.rule
+             records at all (Odoo only evaluates group-scoped rules for
+             users who hold one of the referenced groups), so Hitac Admin
+             already sees every document unrestricted — same reasoning as
+             why it was never added to the native sales_team groups. -->
+    </record>
+
+</odoo>

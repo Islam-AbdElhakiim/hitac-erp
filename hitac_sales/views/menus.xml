@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         WINDOW ACTIONS
+    ====================================================== -->
+    <record id="action_hitac_export_orders" model="ir.actions.act_window">
+        <field name="name">Export Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_sale_order_tree_hitac_no_order_type"/>
+        <field name="domain">[('order_type', '=', 'export')]</field>
+        <field name="context">{'default_order_type': 'export'}</field>
+    </record>
+
+    <record id="action_hitac_local_orders" model="ir.actions.act_window">
+        <field name="name">Local-Market Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_sale_order_tree_hitac_no_order_type"/>
+        <field name="domain">[('order_type', '=', 'local')]</field>
+        <field name="context">{'default_order_type': 'local'}</field>
+    </record>
+
+    <record id="action_hitac_customers" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('customer_rank', '>', 0)]</field>
+        <field name="context">{'default_customer_rank': 1}</field>
+    </record>
+
+    <!-- ======================================================
+         MENUS
+    ====================================================== -->
+
+    <!-- Hide the default Sale app — Hitac Sales replaces it -->
+    <record id="sale.sale_menu_root" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+    <!-- Place Invoicing right after Hitac Sales (sequence 10) -->
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="sequence">15</field>
+    </record>
+
+    <!-- Root app menu -->
+    <menuitem id="menu_hitac_sales_root"
+              name="Hitac Sales"
+              sequence="10"
+              web_icon="hitac_sales, assets/logo.png"
+              groups="hitac_base.group_hitac_sales_user"
+              />
+
+    <!-- Navbar: Sales Orders (parent item with dropdown) -->
+    <menuitem id="menu_hitac_sales_orders"
+              name="Sales Orders"
+              parent="menu_hitac_sales_root"
+              sequence="10"/>
+
+    <!-- Dropdown under Sales Orders -->
+    <menuitem id="menu_hitac_export_orders"
+              name="Export Orders"
+              parent="menu_hitac_sales_orders"
+              action="action_hitac_export_orders"
+              sequence="10"/>
+
+    <menuitem id="menu_hitac_local_orders"
+              name="Local-Market Orders"
+              parent="menu_hitac_sales_orders"
+              action="action_hitac_local_orders"
+              sequence="20"/>
+
+    <!-- Navbar: Products -->
+    <menuitem id="menu_hitac_products"
+              name="Products"
+              parent="menu_hitac_sales_root"
+              action="product.product_template_action_all"
+              sequence="20"/>
+
+    <!-- Navbar: Customers -->
+    <menuitem id="menu_hitac_customers"
+              name="Customers"
+              parent="menu_hitac_sales_root"
+              action="action_hitac_customers"
+              sequence="30"/>
+
+</odoo>

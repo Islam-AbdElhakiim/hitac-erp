@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_production_batch_user,production.batch.user,model_production_batch,hitac_base.group_hitac_production_user,1,1,1,0
+access_production_batch_manager,production.batch.manager,model_production_batch,hitac_base.group_hitac_production_manager,1,1,1,1
+access_stock_pallet_user,stock.pallet.user,model_stock_pallet,hitac_base.group_hitac_production_user,1,1,1,0
+access_stock_pallet_manager,stock.pallet.manager,model_stock_pallet,hitac_base.group_hitac_production_manager,1,1,1,1

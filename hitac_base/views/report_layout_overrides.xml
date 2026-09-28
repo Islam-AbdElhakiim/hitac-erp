@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         FIX: wkhtmltopdf on this Windows install mis-decodes
+         non-ASCII characters (Arabic text, accented letters,
+         the non-breaking space in monetary widgets) as if the
+         file were Windows-1252, producing mojibake in every PDF
+         report. The html5 `<meta charset="utf-8"/>` already in
+         web.report_layout isn't enough for this wkhtmltopdf
+         build when loading from a local temp file; the legacy
+         http-equiv form is honored more reliably.
+    ====================================================== -->
+    <template id="report_layout_utf8_fix" inherit_id="web.report_layout">
+        <xpath expr="//meta[@charset='utf-8']" position="after">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        </xpath>
+    </template>
+
+</odoo>

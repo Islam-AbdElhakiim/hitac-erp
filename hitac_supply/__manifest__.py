@@ -1,0 +1,21 @@
+{
+    'name': 'Hitac Supply',
+    'version': '19.0.1.0.0',
+    'author': 'Islam Elsayed',
+    'category': 'HITAC',
+    'summary': 'Supply order and shipment management for HITAC',
+    'depends': ['sale', 'base', 'product', 'hitac_base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/ir_rules.xml',
+        'data/supply_order_sequence.xml',
+        'views/supply_order_views.xml',
+        'views/supply_shipment_views.xml',
+        'views/product_views.xml',
+        'views/account_move_views.xml',
+        'views/menus.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

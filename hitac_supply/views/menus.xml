@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         ROOT: Hitac Supply
+    ====================================================== -->
+    <menuitem
+        id="menu_hitac_supply_root"
+        name="Hitac Supply"
+        sequence="30"
+        groups="hitac_base.group_hitac_supply_user" />
+
+    <!-- Supply Orders sub-parent (dropdown) -->
+    <menuitem
+        id="menu_hitac_supply_orders"
+        name="Supply Orders"
+        parent="menu_hitac_supply_root"
+        sequence="10" />
+
+    <menuitem
+        id="menu_hitac_supply_orders_all"
+        name="All Supply Orders"
+        parent="menu_hitac_supply_orders"
+        action="hitac_supply.action_supply_order"
+        sequence="5" />
+
+    <menuitem
+        id="menu_hitac_supply_products"
+        name="Products"
+        parent="menu_hitac_supply_orders"
+        action="hitac_supply.action_supply_products"
+        sequence="10" />
+
+    <menuitem
+        id="menu_hitac_supply_packaging"
+        name="Packaging"
+        parent="menu_hitac_supply_orders"
+        action="hitac_supply.action_supply_packaging"
+        sequence="20" />
+
+    <!-- Suppliers -->
+    <menuitem
+        id="menu_hitac_supply_suppliers"
+        name="Suppliers"
+        parent="menu_hitac_supply_root"
+        action="hitac_supply.action_supply_suppliers"
+        sequence="20" />
+
+    <!-- Returns -->
+    <menuitem
+        id="menu_hitac_supply_returns"
+        name="Returns"
+        parent="menu_hitac_supply_root"
+        action="hitac_supply.action_supply_returns"
+        sequence="30" />
+
+    <!-- Shipments -->
+    <menuitem
+        id="menu_hitac_shipments_root"
+        name="Shipments"
+        parent="menu_hitac_supply_root"
+        sequence="35" />
+
+
+</odoo>

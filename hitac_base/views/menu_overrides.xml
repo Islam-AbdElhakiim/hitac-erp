@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         RESTRICT: Apps (base.menu_management) — Admin only
+    ====================================================== -->
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RESTRICT: Settings root (base.menu_administration) — System Admin
+         and Hitac Admin (so Hitac Admins can reach Users & Companies /
+         General Settings to manage users). Apps/Technical/Dashboards/Link
+         Tracker below stay locked to System Admin only, independently —
+         seeing this root does not grant access to those.
+    ====================================================== -->
+    <record id="base.menu_administration" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin'), ref('hitac_base.group_hitac_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RESTRICT: Technical sub-menu (base.menu_custom) — Admin only
+         (already hidden behind group_no_one; this makes it explicit)
+    ====================================================== -->
+    <record id="base.menu_custom" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RENAME + RESTRICT: Dashboards (spreadsheet_dashboard) — Admin only,
+         relabeled "Hitac Reports"
+    ====================================================== -->
+    <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+        <field name="name">Hitac Reports</field>
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RESTRICT: Link Tracker (utm) — Admin only
+    ====================================================== -->
+    <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RESTRICT: Configuration (Hitac Contact list app) — Admin only
+    ====================================================== -->
+    <record id="contacts.res_partner_menu_config" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         RESTRICT: Companies (Settings > Users & Companies) — Admin only
+    ====================================================== -->
+    <record id="base.menu_action_res_company_form" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+
+    <!-- ======================================================
+         SHOW: "Groups" (Settings > Users & Companies) without needing
+         Developer Mode. Natively gated on base.group_no_one alone, and
+         that group's effect is *always* additionally conditioned on
+         debug mode being active — regardless of membership — so simply
+         granting group_no_one (done in hitac_groups.xml) wasn't enough.
+         Adding our own groups here works normally, with no such
+         condition; group_no_one itself is kept (Command.link, not set)
+         so the default developer-mode behavior for everyone else is
+         unaffected.
+    ====================================================== -->
+    <record id="base.menu_action_res_groups" model="ir.ui.menu">
+        <field name="group_ids" eval="[
+            Command.link(ref('base.group_no_one')),
+            Command.link(ref('hitac_base.group_sys_admin')),
+            Command.link(ref('hitac_base.group_hitac_admin'))
+        ]" />
+    </record>
+
+    <!-- ======================================================
+        RENAME: Discuss (root) → Hitac Connect
+    ====================================================== -->
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="name">Hitac Connect</field>
+    </record>
+
+    <!-- ======================================================
+        RENAME: Discuss (inner sub-menu) → Connect
+    ====================================================== -->
+    <record id="mail.main_menu_discuss" model="ir.ui.menu">
+        <field name="name">Connect</field>
+    </record>
+
+    <!-- ======================================================
+        RENAME: Invoicing → Hitac Invoicing
+    ====================================================== -->
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="name">Hitac Invoicing</field>
+    </record>
+
+        <!-- ======================================================
+        RENAME: Calendar root menu → Hitac Calendar and change its order to first position
+    ====================================================== -->
+    <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+        <field name="name">Hitac Calendar</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <!-- ======================================================
+        RENAME: Contacts root menu → Hitac Contact list
+    ====================================================== -->
+    <record id="contacts.menu_contacts" model="ir.ui.menu">
+        <field name="name">Hitac Contact list</field>
+    </record>
+
+    <!-- ======================================================
+        ADD: one menu item per hitac_type (HITAC_PARTNER_TYPES in
+        models/res_partner.py), each listing only contacts of that type.
+    ====================================================== -->
+    <record id="action_contacts_type_company" model="ir.actions.act_window">
+        <field name="name">Company</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'company')]</field>
+        <field name="context">{'default_hitac_type': 'company', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_contact" model="ir.actions.act_window">
+        <field name="name">Contact</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'contact')]</field>
+        <field name="context">{'default_hitac_type': 'contact'}</field>
+    </record>
+    <record id="action_contacts_type_employee" model="ir.actions.act_window">
+        <field name="name">Employee</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'employee')]</field>
+        <field name="context">{'default_hitac_type': 'employee'}</field>
+    </record>
+    <record id="action_contacts_type_farm" model="ir.actions.act_window">
+        <field name="name">Farm</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'farm')]</field>
+        <field name="context">{'default_hitac_type': 'farm', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_packing_house" model="ir.actions.act_window">
+        <field name="name">Packing House</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'packing_house')]</field>
+        <field name="context">{'default_hitac_type': 'packing_house', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_supplier" model="ir.actions.act_window">
+        <field name="name">Supplier</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'supplier')]</field>
+        <field name="context">{'default_hitac_type': 'supplier', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_freight_forwarder" model="ir.actions.act_window">
+        <field name="name">Freight Forwarder</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'freight_forwarder')]</field>
+        <field name="context">{'default_hitac_type': 'freight_forwarder', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_shipping_line" model="ir.actions.act_window">
+        <field name="name">Shipping Line</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'shipping_line')]</field>
+        <field name="context">{'default_hitac_type': 'shipping_line', 'default_is_company': True}</field>
+    </record>
+    <record id="action_contacts_type_drayage_company" model="ir.actions.act_window">
+        <field name="name">Drayage Company</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="domain">[('hitac_type', '=', 'drayage_company')]</field>
+        <field name="context">{'default_hitac_type': 'drayage_company', 'default_is_company': True}</field>
+    </record>
+
+    <!-- ======================================================
+         REMOVE: the base, unfiltered "Contacts" menu item — redundant
+         now that the grouped type-based menus below cover everything.
+    ====================================================== -->
+    <record id="contacts.res_partner_menu_contacts" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+    <!-- Grouped under 3 parent menus instead of 8 flat items, matching
+         HITAC's actual business flow: general business contacts, sources
+         feeding Supply/Production, and Logistics-stage partners. -->
+    <menuitem id="menu_contacts_type_general" name="General Contacts" parent="contacts.menu_contacts" sequence="3"/>
+    <menuitem id="menu_contacts_type_company" name="Company" action="action_contacts_type_company" parent="menu_contacts_type_general" sequence="1"/>
+    <menuitem id="menu_contacts_type_contact" name="Contact" action="action_contacts_type_contact" parent="menu_contacts_type_general" sequence="2"/>
+    <menuitem id="menu_contacts_type_employee" name="Employee" action="action_contacts_type_employee" parent="menu_contacts_type_general" sequence="3"/>
+
+    <menuitem id="menu_contacts_type_supply_sources" name="Supply Sources" parent="contacts.menu_contacts" sequence="4"/>
+    <menuitem id="menu_contacts_type_farm" name="Farm" action="action_contacts_type_farm" parent="menu_contacts_type_supply_sources" sequence="1"/>
+    <menuitem id="menu_contacts_type_packing_house" name="Packing House" action="action_contacts_type_packing_house" parent="menu_contacts_type_supply_sources" sequence="2"/>
+    <menuitem id="menu_contacts_type_supplier" name="Supplier" action="action_contacts_type_supplier" parent="menu_contacts_type_supply_sources" sequence="3"/>
+
+    <menuitem id="menu_contacts_type_logistics_partners" name="Logistics Partners" parent="contacts.menu_contacts" sequence="5"/>
+    <menuitem id="menu_contacts_type_freight_forwarder" name="Freight Forwarder" action="action_contacts_type_freight_forwarder" parent="menu_contacts_type_logistics_partners" sequence="1"/>
+    <menuitem id="menu_contacts_type_shipping_line" name="Shipping Line" action="action_contacts_type_shipping_line" parent="menu_contacts_type_logistics_partners" sequence="2"/>
+    <menuitem id="menu_contacts_type_drayage_company" name="Drayage Company" action="action_contacts_type_drayage_company" parent="menu_contacts_type_logistics_partners" sequence="3"/>
+
+</odoo>

@@ -1,0 +1,349 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hitac_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-08 15:44+0000\n"
+"PO-Revision-Date: 2026-09-08 15:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hitac_base
+#: model:ir.actions.report,print_report_name:hitac_base.action_report_hitac_invoice
+msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "ADD:"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups.privilege,name:hitac_base.privilege_hitac_administration
+msgid "Administration"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "BILL TO:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Bank:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "CREDIT NOTE"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__company
+msgid "Company"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model,name:hitac_base.model_res_partner
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__contact
+msgid "Contact"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "DRAFT CREDIT NOTE"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "DRAFT INVOICE"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Date:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Description"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields,field_description:hitac_base.field_account_journal__display_name
+#: model:ir.model.fields,field_description:hitac_base.field_account_move__display_name
+#: model:ir.model.fields,field_description:hitac_base.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:hitac_base.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__drayage_company
+msgid "Drayage Company"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Due Date:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Email:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "FROM:"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__farm
+msgid "Farm"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__freight_forwarder
+msgid "Freight Forwarder"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "HITAC <span class=\"light\">TRADING</span>"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.module.category,name:hitac_base.module_category_hitac
+msgid "Hitac"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_admin
+msgid "Hitac Admin"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.module.category,description:hitac_base.module_category_hitac
+msgid "Hitac ERP Roles"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.actions.report,name:hitac_base.action_report_hitac_invoice
+msgid "Hitac Invoice"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_logistics_manager
+msgid "Hitac Logistics Manager"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_logistics_user
+msgid "Hitac Logistics User"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_production_manager
+msgid "Hitac Production Manager"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_production_user
+msgid "Hitac Production User"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_sales_manager
+msgid "Hitac Sales Manager"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_sales_user
+msgid "Hitac Sales User"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_supply_manager
+msgid "Hitac Supply Manager"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_hitac_supply_user
+msgid "Hitac Supply User"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "IBAN:"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields,field_description:hitac_base.field_account_journal__id
+#: model:ir.model.fields,field_description:hitac_base.field_account_move__id
+#: model:ir.model.fields,field_description:hitac_base.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:hitac_base.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "INVOICE"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "ITEM No."
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Invoice No."
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model,name:hitac_base.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model,name:hitac_base.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups.privilege,name:hitac_base.privilege_hitac_logistics
+msgid "Logistics"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "NAME:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "NOTE:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Name :"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Our BANK Details :"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__packing_house
+msgid "Packing House"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Phone:"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups.privilege,name:hitac_base.privilege_hitac_production
+msgid "Production"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Quantity"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model,name:hitac_base.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "SAID :"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "SIGNATURE:"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups.privilege,name:hitac_base.privilege_hitac_sales
+msgid "Sales"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.view_partner_form_hitac
+msgid "Select a Type..."
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__shipping_line
+msgid "Shipping Line"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields.selection,name:hitac_base.selection__res_partner__hitac_type__supplier
+msgid "Supplier"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups.privilege,name:hitac_base.privilege_hitac_supply
+msgid "Supply"
+msgstr ""
+
+#. module: hitac_base
+#: model:res.groups,name:hitac_base.group_sys_admin
+msgid "System Admin"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "T R A D I N G"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "TOTAL"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Tax ID:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Terms of payment:"
+msgstr ""
+
+#. module: hitac_base
+#: model:ir.model.fields,field_description:hitac_base.field_res_partner__hitac_type
+#: model:ir.model.fields,field_description:hitac_base.field_res_users__hitac_type
+msgid "Type"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Unit Price"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "Website:"
+msgstr ""
+
+#. module: hitac_base
+#: model_terms:ir.ui.view,arch_db:hitac_base.report_hitac_invoice_document
+msgid "هيتاك للتجارة"
+msgstr ""

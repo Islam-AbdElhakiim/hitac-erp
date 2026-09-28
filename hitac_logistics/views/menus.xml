@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_hitac_logistics_root"
+        name="Hitac Logistics"
+        sequence="40"
+        groups="hitac_base.group_hitac_logistics_user"/>
+
+    <menuitem
+        id="menu_hitac_logistics_shipments"
+        name="Shipments"
+        parent="menu_hitac_logistics_root"
+        action="action_logistics_shipment"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_hitac_logistics_containers"
+        name="Containers"
+        parent="menu_hitac_logistics_root"
+        action="action_logistics_container"
+        sequence="20"/>
+
+</odoo>

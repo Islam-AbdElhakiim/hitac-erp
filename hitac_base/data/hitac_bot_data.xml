@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Renames OdooBot to "Hitac AI".
+
+        The name is set by addons/mail/data/res_partner_data.xml, whose whole file is
+        noupdate="1". That flag is stored on the ir_model_data row for base.partner_root,
+        so a plain <record id="base.partner_root"> here is silently SKIPPED on update -
+        Odoo checks the existing xmlid's noupdate flag, not the one on our own file.
+        A <function> call is not subject to that check and runs on install and on every
+        -u hitac_base, which is what makes the branding reproducible on a fresh instance.
+
+        Trade-off: this reasserts the name on every module update, so renaming the bot
+        in the UI will not stick. Change it here instead.
+    -->
+    <function model="res.partner" name="write">
+        <value model="res.partner" eval="[ref('base.partner_root')]"/>
+        <value eval="{'name': 'Hitac AI'}"/>
+    </function>
+
+</odoo>

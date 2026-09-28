@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supply_order_hitac_supply_user,Access supply order by hitac supply user,model_supply_order,hitac_base.group_hitac_supply_user,1,1,1,0
+access_supply_order_hitac_supply_manager,Access supply order by hitac supply manager,model_supply_order,hitac_base.group_hitac_supply_manager,1,1,1,1
+access_supply_shipment_hitac_supply_user,Access supply shipment by hitac supply user,model_supply_shipment,hitac_base.group_hitac_supply_user,1,1,1,0
+access_supply_shipment_hitac_supply_manager,Access supply shipment by hitac supply manager,model_supply_shipment,hitac_base.group_hitac_supply_manager,1,1,1,1

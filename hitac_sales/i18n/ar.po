@@ -1,0 +1,970 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hitac_sales
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-08 15:43+0000\n"
+"PO-Revision-Date: 2026-09-08 15:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hitac_sales
+#: model:ir.actions.report,print_report_name:hitac_sales.action_report_hitac_saleorder
+msgid ""
+"'%s - %s' % (object.state == 'proforma' and 'PI' or 'SO', object.pi_number "
+"or object.name)"
+msgstr ""
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "(Total ="
+msgstr "(الإجمالي ="
+
+#. module: hitac_sales
+#: model:mail.template,body_html:hitac_sales.email_template_hitac_proforma
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello,\n"
+"        <br/><br/>\n"
+"        Your Pro-forma invoice <span style=\"font-weight: bold;\" t-out=\"object.name or ''\"/>\n"
+"        amounting in <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00</span> is available.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <t t-if=\"not is_html_empty(object.user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <div data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"object.user_id.signature or ''\" data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        مرحباً،\n"
+"        <br/><br/>\n"
+"        فاتورتكم المبدئية <span style=\"font-weight: bold;\" t-out=\"object.name or ''\"/>\n"
+"        بمبلغ <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00</span> أصبحت متاحة.\n"
+"        <br/><br/>\n"
+"        لا تترددوا في التواصل معنا إذا كانت لديكم أي استفسارات.\n"
+"        <t t-if=\"not is_html_empty(object.user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <div data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"object.user_id.signature or ''\" data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: hitac_sales
+#: model:mail.template,body_html:hitac_sales.email_template_hitac_quotation
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello,\n"
+"        <br/><br/>\n"
+"        Your quotation <span style=\"font-weight: bold;\" t-out=\"object.name or ''\"/>\n"
+"        amounting in <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00</span> is ready for review.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <t t-if=\"not is_html_empty(object.user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <div data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"object.user_id.signature or ''\" data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        مرحباً،\n"
+"        <br/><br/>\n"
+"        عرض السعر الخاص بكم <span style=\"font-weight: bold;\" t-out=\"object.name or ''\"/>\n"
+"        بمبلغ <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 10.00</span> جاهز الآن للمراجعة.\n"
+"        <br/><br/>\n"
+"        لا تترددوا في التواصل معنا إذا كانت لديكم أي استفسارات.\n"
+"        <t t-if=\"not is_html_empty(object.user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <div data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"object.user_id.signature or ''\" data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.sale_order_portal_view_pdf_label
+msgid "<i class=\"fa fa-print me-1\"/>View PDF"
+msgstr "<i class=\"fa fa-print me-1\"/>عرض PDF"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "<span class=\"visually-hidden\">Toggle Dropdown</span>"
+msgstr "<span class=\"visually-hidden\">إظهار/إخفاء القائمة المنسدلة</span>"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "ADD:"
+msgstr "العنوان:"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "An order must have at least one order line."
+msgstr "يجب أن يحتوي الطلب على بند واحد على الأقل."
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Are you sure you want to cancel this order?"
+msgstr "هل أنت متأكد أنك تريد إلغاء هذا الطلب؟"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__bl_document
+msgid "B/L Document"
+msgstr "مستند بوليصة الشحن"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__bl_document_filename
+msgid "B/L Document Name"
+msgstr "اسم مستند بوليصة الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "BUYER Details:"
+msgstr "بيانات المشتري:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Bank:"
+msgstr "البنك:"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__batch_reference
+msgid "Batch"
+msgstr "دفعة إنتاج"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Batch & Packing"
+msgstr "دفعة الإنتاج والتعبئة"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__bl_number
+msgid "Bill of Lading No."
+msgstr "رقم بوليصة الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Buyer Contact"
+msgstr "بيانات التواصل مع المشتري"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__buyer_contact_name
+msgid "Buyer Contact Name"
+msgstr "اسم جهة الاتصال بالمشتري"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__buyer_contact_title
+msgid "Buyer Contact Title"
+msgstr "المسمى الوظيفي لجهة الاتصال بالمشتري"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Cancel Order"
+msgstr "إلغاء الطلب"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__cancelled
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid ""
+"Cannot confirm this order.\n"
+"Local orders must be in 'Quotation' state.\n"
+"Export orders must be in 'Pro-forma' state."
+msgstr ""
+"لا يمكن تأكيد هذا الطلب.\n"
+"يجب أن تكون الطلبات المحلية في حالة 'عرض سعر'.\n"
+"يجب أن تكون طلبات التصدير في حالة 'فاتورة مبدئية'."
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__carrier_name
+msgid "Carrier / Shipping Line"
+msgstr "خط الشحن"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__carton_qty
+msgid "Cartons"
+msgstr "الكراتين"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Confirm Order"
+msgstr "تأكيد الطلب"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__confirmed
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__containers_reference
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Containers"
+msgstr "حاويات"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.sale_order_portal_view_pdf_label
+msgid "Copy"
+msgstr "نسخ"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__country_of_origin
+msgid "Country of Origin"
+msgstr "بلد المنشأ"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Country of Origin:"
+msgstr "بلد المنشأ:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Create Invoice"
+msgstr "إنشاء فاتورة"
+
+#. module: hitac_sales
+#: model:ir.actions.act_window,name:hitac_sales.action_hitac_customers
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_customers
+msgid "Customers"
+msgstr "العملاء"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__customs_broker
+msgid "Customs Broker"
+msgstr "مخلص جمركي"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Date:"
+msgstr "التاريخ:"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__departed
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Departed"
+msgstr "تم الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Deposit"
+msgstr "عربون"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__deposit_amount
+msgid "Deposit Amount"
+msgstr "مبلغ العربون"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__deposit_paid
+msgid "Deposit Paid"
+msgstr "تم دفع العربون"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Description"
+msgstr "الوصف"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Details"
+msgstr "التفاصيل"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__display_name
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__eta_date
+msgid "ETA (Estimated Arrival)"
+msgstr "تاريخ الوصول المتوقع"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__etd_date
+msgid "ETD (Estimated Departure)"
+msgstr "تاريخ المغادرة المتوقع"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "EXPORTER Details:"
+msgstr "بيانات المصدّر:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Email:"
+msgstr "البريد الإلكتروني:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Expiration date:"
+msgstr "تاريخ الانتهاء:"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__order_type__export
+msgid "Export"
+msgstr "تصدير"
+
+#. module: hitac_sales
+#: model:ir.actions.act_window,name:hitac_sales.action_hitac_export_orders
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_export_orders
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Export Orders"
+msgstr "طلبات التصدير"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Finance & Documents"
+msgstr "المالية والمستندات"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "GENERAL:"
+msgstr "عام:"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__general_note
+msgid "General Note"
+msgstr "ملاحظة عامة"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.sale_order_portal_view_pdf_label
+msgid "Get this order's structured data"
+msgstr "الحصول على البيانات المنظمة لهذا الطلب"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__gross_weight
+msgid "Gross Weight (Kg)"
+msgstr "الوزن الإجمالي (كجم)"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "HITAC <span class=\"light\">TRADING</span>"
+msgstr ""
+
+#. module: hitac_sales
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_sales_root
+msgid "Hitac Sales"
+msgstr "مبيعات هيتاك"
+
+#. module: hitac_sales
+#: model:mail.template,name:hitac_sales.email_template_hitac_proforma
+msgid "Hitac Sales: Send Pro-forma"
+msgstr "مبيعات هيتاك: إرسال الفاتورة المبدئية"
+
+#. module: hitac_sales
+#: model:mail.template,name:hitac_sales.email_template_hitac_quotation
+msgid "Hitac Sales: Send Quotation"
+msgstr "مبيعات هيتاك: إرسال عرض السعر"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "IBAN:"
+msgstr "الآيبان:"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__id
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "INCOTERMS :"
+msgstr "شروط التجارة الدولية (إنكوتيرمز) :"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "ITEM No."
+msgstr "رقم الصنف"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "In Production"
+msgstr "قيد الإنتاج"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__incoterm_code
+msgid "Incoterms"
+msgstr "شروط التجارة الدولية (إنكوتيرمز)"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__lc_document
+msgid "LC Document"
+msgstr "مستند خطاب الاعتماد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__lc_document_filename
+msgid "LC Document Name"
+msgstr "اسم مستند خطاب الاعتماد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__lc_issued
+msgid "LC Issued"
+msgstr "تم إصدار خطاب الاعتماد"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Letter of Credit"
+msgstr "خطاب اعتماد"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Link at least one Supply Order before moving to Production."
+msgstr "يجب ربط أمر توريد واحد على الأقل قبل الانتقال إلى الإنتاج."
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__order_type__local
+msgid "Local"
+msgstr "محلي"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Local Orders"
+msgstr "الطلبات المحلية"
+
+#. module: hitac_sales
+#: model:ir.actions.act_window,name:hitac_sales.action_hitac_local_orders
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_local_orders
+msgid "Local-Market Orders"
+msgstr "طلبات السوق المحلي"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Mark as Departed"
+msgstr "تعيين كـ \"تم الشحن\""
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Mark as Paid"
+msgstr "تعيين كـ \"مدفوع\""
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "NAME:"
+msgstr "الاسم:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "NOTE:"
+msgstr "ملاحظة:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Name :"
+msgstr "الاسم :"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__net_weight
+msgid "Net Weight (Kg)"
+msgstr "الوزن الصافي (كجم)"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Confirmed order can move to Supply."
+msgstr "يمكن فقط للطلب المؤكد الانتقال إلى مرحلة التوريد."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Departed order can be reset to Shipping."
+msgstr "يمكن فقط إعادة الطلب الذي تم شحنه إلى مرحلة الشحن."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Paid order can be reset to Departed."
+msgstr "يمكن فقط إعادة الطلب المدفوع إلى حالة \"تم الشحن\"."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Production order can be reset to Supply."
+msgstr "يمكن فقط إعادة الطلب الذي في مرحلة الإنتاج إلى مرحلة التوريد."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Quotation can be sent as a Pro-forma."
+msgstr "يمكن فقط إرسال عرض السعر كفاتورة مبدئية."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid ""
+"Only a Quotation, Pro-forma, Confirmed, or Cancelled order can be reset."
+msgstr ""
+"يمكن فقط إعادة الطلب الذي في حالة عرض السعر أو الفاتورة المبدئية أو مؤكد أو "
+"ملغي."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Only a Shipping order can be reset to Production."
+msgstr "يمكن فقط إعادة الطلب الذي في مرحلة الشحن إلى مرحلة الإنتاج."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid ""
+"Only a Supply order, or a Production order that did not go through Supply, "
+"can be reset to Confirmed."
+msgstr ""
+"يمكن فقط إعادة طلب في مرحلة التوريد، أو طلب في مرحلة الإنتاج لم يمر بمرحلة "
+"التوريد، إلى مرحلة مؤكد."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid ""
+"Only orders that have not yet Departed or been Paid can be cancelled. Use "
+"one of the \"Reset to...\" buttons to step back through the pipeline first."
+msgstr ""
+"لا يمكن إلغاء إلا الطلبات التي لم يتم شحنها أو دفعها بعد. استخدم أحد أزرار "
+"\"إعادة إلى...\" للرجوع خطوة إلى الوراء في مسار العمل أولاً."
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__order_type
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Order Type"
+msgstr "نوع الطلب"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Order must be in Confirmed or Supply state to move to Production."
+msgstr "يجب أن يكون الطلب في حالة مؤكد أو توريد للانتقال إلى الإنتاج."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Order must be in Departed state to mark as Paid."
+msgstr "يجب أن يكون الطلب في حالة \"تم الشحن\" لتعيينه كمدفوع."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Order must be in Production state to move to Shipping."
+msgstr "يجب أن يكون الطلب في حالة الإنتاج للانتقال إلى الشحن."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Order must be in Shipping state to mark as Departed."
+msgstr "يجب أن يكون الطلب في حالة الشحن لتعيينه كـ \"تم الشحن\"."
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Our BANK Details :"
+msgstr "بياناتنا البنكية :"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__pi_number
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "PI No."
+msgstr "رقم الفاتورة المبدئية"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__pi_sequence
+msgid "PI Sequence"
+msgstr "تسلسل الفاتورة المبدئية"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "POD :"
+msgstr "ميناء التفريغ :"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "POL :"
+msgstr "ميناء الشحن :"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "PROFORMA INVOICE"
+msgstr "فاتورة مبدئية"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order_line__packing_type
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Packing"
+msgstr "التعبئة"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__packing_house
+msgid "Packing House"
+msgstr "بيت التعبئة"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__paid
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Paid"
+msgstr "مدفوع"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Phone:"
+msgstr "الهاتف:"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__port_of_discharge
+msgid "Port of Discharge (POD)"
+msgstr "ميناء التفريغ"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__port_of_loading
+msgid "Port of Loading (POL)"
+msgstr "ميناء الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Preview"
+msgstr "معاينة"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Print"
+msgstr "طباعة"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__proforma
+msgid "Pro-forma"
+msgstr "فاتورة مبدئية"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Pro-forma / Document Details"
+msgstr "الفاتورة المبدئية / تفاصيل المستند"
+
+#. module: hitac_sales
+#: model:ir.actions.report,name:hitac_sales.action_report_hitac_saleorder
+msgid "Pro-forma / Sales Order"
+msgstr "الفاتورة المبدئية / أمر البيع"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Pro-forma invoices are only applicable to Export orders."
+msgstr "الفواتير المبدئية تنطبق فقط على طلبات التصدير."
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__production
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Production"
+msgstr "إنتاج"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__production_notes
+msgid "Production Notes"
+msgstr "ملاحظات الإنتاج"
+
+#. module: hitac_sales
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_products
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "QUOTATION"
+msgstr "عرض سعر"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__quotation
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Quotation"
+msgstr "عرض سعر"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/controllers/portal.py:0
+msgid "Quotation viewed by customer %s"
+msgstr "تمت مشاهدة عرض السعر بواسطة العميل %s"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "RATE/Carton"
+msgstr "السعر/الكرتونة"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Confirmed"
+msgstr "إعادة إلى مؤكد"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Departed"
+msgstr "إعادة إلى تم الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Production"
+msgstr "إعادة إلى الإنتاج"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Quotation"
+msgstr "إعادة إلى عرض السعر"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Shipping"
+msgstr "إعادة إلى الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Reset to Supply"
+msgstr "إعادة إلى التوريد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__production_responsible
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "SAID :"
+msgstr "المبلغ كتابة :"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "SALES ORDER"
+msgstr "أمر بيع"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "SIGNATURE:"
+msgstr "التوقيع:"
+
+#. module: hitac_sales
+#: model:ir.model,name:hitac_sales.model_sale_order
+msgid "Sales Order"
+msgstr "أمر بيع"
+
+#. module: hitac_sales
+#: model:ir.model,name:hitac_sales.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "بند أمر البيع"
+
+#. module: hitac_sales
+#: model:ir.ui.menu,name:hitac_sales.menu_hitac_sales_orders
+msgid "Sales Orders"
+msgstr "أوامر البيع"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Schedule & Volume"
+msgstr "الجدولة الزمنية والحجم"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Send Pro-forma"
+msgstr "إرسال الفاتورة المبدئية"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Send by Email"
+msgstr "إرسال بالبريد الإلكتروني"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__shipping
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_search_hitac
+msgid "Shipping"
+msgstr "شحن"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: hitac_sales
+#: model:ir.model.fields.selection,name:hitac_sales.selection__sale_order__state__supply
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Supply"
+msgstr "توريد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__supply_order_ids
+msgid "Supply Orders"
+msgstr "أوامر التوريد"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__is_supply_required
+msgid "Supply Required"
+msgstr "يتطلب توريداً"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "Supply is not required for this order. Use \"To Production\" instead."
+msgstr ""
+"التوريد غير مطلوب لهذا الطلب. استخدم زر \"الانتقال إلى الإنتاج\" بدلاً من "
+"ذلك."
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "T R A D I N G"
+msgstr ""
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "TOTAL"
+msgstr "الإجمالي"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Terms of payment:"
+msgstr "شروط الدفع:"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/controllers/portal.py:0
+msgid "The amount is lower than the prepayment amount."
+msgstr "المبلغ أقل من مبلغ الدفعة المقدمة."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "This order did not go through Supply. Use \"Reset to Confirmed\" instead."
+msgstr ""
+"هذا الطلب لم يمر بمرحلة التوريد. استخدم زر \"إعادة إلى مؤكد\" بدلاً من ذلك."
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid "This order requires a Supply stage. Please use \"To Supply\" first."
+msgstr "هذا الطلب يتطلب مرحلة توريد. يرجى استخدام زر \"إلى التوريد\" أولاً."
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "To Production"
+msgstr "إلى الإنتاج"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "To Shipping"
+msgstr "إلى الشحن"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "To Supply"
+msgstr "إلى التوريد"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Total :"
+msgstr "الإجمالي :"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__total_carton_qty
+msgid "Total Cartons"
+msgstr "إجمالي الكراتين"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__total_cbm
+msgid "Total Volume (CBM)"
+msgstr "الحجم الإجمالي (متر مكعب)"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.view_sale_order_form_hitac
+msgid "Transport Details"
+msgstr "تفاصيل النقل"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Units No"
+msgstr "عدد الوحدات"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.sale_order_portal_view_pdf_label
+msgid ""
+"Use the above URL to retrieve this order's data in UBL format for your own "
+"accounting or ERP system."
+msgstr ""
+"استخدم الرابط أعلاه لاسترجاع بيانات هذا الطلب بصيغة UBL لاستخدامها في نظام "
+"المحاسبة أو تخطيط الموارد الخاص بكم."
+
+#. module: hitac_sales
+#: model:mail.template,description:hitac_sales.email_template_hitac_proforma
+msgid "Used to send a Hitac pro-forma invoice to the customer"
+msgstr "يُستخدم لإرسال فاتورة مبدئية من هيتاك إلى العميل"
+
+#. module: hitac_sales
+#: model:mail.template,description:hitac_sales.email_template_hitac_quotation
+msgid "Used to send a Hitac quotation to the customer"
+msgstr "يُستخدم لإرسال عرض سعر من هيتاك إلى العميل"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__validity_note
+msgid "Validity Note"
+msgstr "ملاحظة الصلاحية"
+
+#. module: hitac_sales
+#: model:ir.model.fields,field_description:hitac_sales.field_sale_order__vessel_name
+msgid "Vessel / Flight Name"
+msgstr "اسم السفينة / الرحلة"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.sale_order_portal_view_pdf_label
+msgid "View PDF"
+msgstr "عرض PDF"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Website:"
+msgstr "الموقع الإلكتروني:"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: hitac_sales
+#. odoo-python
+#: code:addons/hitac_sales/models/sale_order.py:0
+msgid ""
+"You cannot delete a Pro-forma or a confirmed sales order. You must first "
+"cancel it."
+msgstr "لا يمكنك حذف فاتورة مبدئية أو أمر بيع مؤكد. يجب عليك أولاً إلغاؤه."
+
+#. module: hitac_sales
+#: model:mail.template,subject:hitac_sales.email_template_hitac_proforma
+msgid ""
+"{{ object.company_id.name }} Pro-forma Invoice (Ref {{ object.name or 'n/a' "
+"}})"
+msgstr ""
+"{{ object.company_id.name }} فاتورة مبدئية (مرجع {{ object.name or 'n/a' }})"
+
+#. module: hitac_sales
+#: model:mail.template,subject:hitac_sales.email_template_hitac_quotation
+msgid ""
+"{{ object.company_id.name }} Quotation (Ref {{ object.name or 'n/a' }})"
+msgstr ""
+"{{ object.company_id.name }} عرض سعر (مرجع {{ object.name or 'n/a' }})"
+
+#. module: hitac_sales
+#: model_terms:ir.ui.view,arch_db:hitac_sales.report_hitac_saleorder_document
+msgid "هيتاك للتجارة"
+msgstr ""

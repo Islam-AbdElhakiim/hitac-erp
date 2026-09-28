@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_logistics_shipment_user,logistics.shipment.user,model_logistics_shipment,hitac_base.group_hitac_logistics_user,1,1,1,0
+access_logistics_shipment_manager,logistics.shipment.manager,model_logistics_shipment,hitac_base.group_hitac_logistics_manager,1,1,1,1
+access_logistics_container_user,logistics.container.user,model_logistics_container,hitac_base.group_hitac_logistics_user,1,1,1,0
+access_logistics_container_manager,logistics.container.manager,model_logistics_container,hitac_base.group_hitac_logistics_manager,1,1,1,1
+access_load_pallet_wizard_user,logistics.load.pallet.wizard.user,model_logistics_load_pallet_wizard,hitac_base.group_hitac_logistics_user,1,1,1,0

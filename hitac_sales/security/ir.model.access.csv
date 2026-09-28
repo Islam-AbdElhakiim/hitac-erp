@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_hitac_sales_user,Access sale order by hitac sales user,"sale.model_sale_order",hitac_base.group_hitac_sales_user,1,1,1,0
+access_sale_order_hitac_sales_manager,Access sale order by hitac sales manager,sale.model_sale_order,hitac_base.group_hitac_sales_manager,1,1,1,1
+access_supply_order_hitac_sales_user,Access supply order by hitac sales user (read-only),hitac_supply.model_supply_order,hitac_base.group_hitac_sales_user,1,0,0,0
+access_supply_order_hitac_sales_manager,Access supply order by hitac sales manager (read-only),hitac_supply.model_supply_order,hitac_base.group_hitac_sales_manager,1,0,0,0

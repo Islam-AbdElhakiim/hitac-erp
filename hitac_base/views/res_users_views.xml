@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The "New User" quick-create dialog (Settings > Users > New) creates
+         both res.users and its underlying res.partner in one go. The
+         partner's hitac_type field is required (see models/res_partner.py),
+         but nothing on this dialog exposes it — so saving a new user
+         unconditionally failed. Surfaced here via the same related-field
+         pattern res.users already uses for name/email/phone
+         (models/res_users.py). -->
+    <record id="view_users_simple_form_hitac" model="ir.ui.view">
+        <field name="name">hitac.res.users.simplified.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']/.." position="after">
+                <div class="d-flex align-items-baseline w-100">
+                    <i class="fa fa-fw me-1 fa-id-badge text-primary" title="Type"/>
+                    <field name="hitac_type" class="w-100" placeholder="Select a Type..."/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_users_form_hitac" model="ir.ui.view">
+        <field name="name">hitac.res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']/.." position="after">
+                <h5 name="h5_hitac_type" class="d-flex align-items-baseline mb-0">
+                    <i class="fa fa-fw fa-id-badge me-1 text-primary" title="Type"/>
+                    <field name="hitac_type" placeholder="Select a Type..." class="w-75"/>
+                </h5>
+            </xpath>
+            <xpath expr="//h5[@name='h5_hitac_type']" position="after">
+                <h5 name="h5_hitac_department" class="d-flex align-items-baseline mb-0">
+                    <i class="fa fa-fw fa-sitemap me-1 text-primary" title="Department"/>
+                    <field name="hitac_department" placeholder="Select a Department..." class="w-75"/>
+                </h5>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Adds the "Department" column and a "Group By: Department" option
+         to Settings > Users & Companies > Users. -->
+    <record id="view_users_tree_hitac" model="ir.ui.view">
+        <field name="name">hitac.res.users.list.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <field name="login" position="after">
+                <field name="hitac_department" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_users_search_hitac" model="ir.ui.view">
+        <field name="name">hitac.res.users.search.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search"/>
+        <field name="arch" type="xml">
+            <filter name="Inactive" position="after">
+                <separator/>
+                <filter name="group_by_hitac_department" string="Department" context="{'group_by': 'hitac_department'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- Group the Users list by Department by default. -->
+    <record id="base.action_res_users" model="ir.actions.act_window">
+        <field name="context">{'search_default_filter_no_share': 1, 'is_action_res_users': True, 'search_default_group_by_hitac_department': 1}</field>
+    </record>
+
+</odoo>

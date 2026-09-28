@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_hitac_production_root"
+        name="Hitac Production"
+        sequence="30"
+        groups="hitac_base.group_hitac_production_user"/>
+
+    <menuitem
+        id="menu_hitac_production_batches"
+        name="Batches"
+        parent="menu_hitac_production_root"
+        action="action_production_batch"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_hitac_production_pallets"
+        name="Pallets"
+        parent="menu_hitac_production_root"
+        action="action_stock_pallet"
+        sequence="20"/>
+
+    <!-- ======================================================
+         RESTRICT: Inventory root (stock.menu_stock_root) — Admin only
+         Commented out: no longer relevant now that this module doesn't
+         depend on stock.
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hitac_base.group_sys_admin')])]" />
+    </record>
+    ====================================================== -->
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Renamed in place, same pattern as hitac_base's menu_overrides.xml
+         (Invoicing -> Hitac Invoicing, Discuss -> Hitac Connect). The
+         menu's own groups="mass_mailing.group_mass_mailing_user" already
+         restricts visibility to Marketing User/Manager (Manager implies
+         User, see security/marketing_groups.xml) — nothing to change there. -->
+    <record id="mass_mailing.mass_mailing_menu_root" model="ir.ui.menu">
+        <field name="name">Hitac Email Marketing</field>
+    </record>
+
+</odoo>

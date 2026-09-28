@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Optional traceability fields for vendor bills (see
+         models/account_move.py) — Supply Order for Supplier/Packing House
+         bills, plus Sales Order for Packing House bills specifically.
+         Both are optional on every vendor bill; nothing enforces them. -->
+    <record id="view_move_form_hitac" model="ir.ui.view">
+        <field name="name">hitac.account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <group id="other_tab_group" position="inside">
+                <group string="Hitac Traceability"
+                       name="hitac_traceability_group"
+                       invisible="move_type not in ('in_invoice', 'in_refund', 'in_receipt')">
+                    <!-- hitac_supply adds hitac_supply_order_id before this one -->
+                    <field name="hitac_sale_order_id"/>
+                </group>
+            </group>
+
+            <!-- Hitac Expenses buckets (Suppliers / Packing Houses /
+                 Packagings and Equipment / Employees / generic Expenses)
+                 are all opened as Receipts, not Bills — no manual
+                 Bill/Receipt toggle; the bucket is decided by which menu
+                 the document was created from (hitac_expense_type). -->
+            <xpath expr="//field[@name='move_type'][@widget='receipt_selector']" position="attributes">
+                <attribute name="invisible">hitac_expense_type or move_type == 'entry'</attribute>
+            </xpath>
+
+            <!-- Can't select by @string (translated attributes are barred as
+                 inheritance selectors) — the base "Vendor" label is the only
+                 label[@for='partner_id'] whose original invisible condition
+                 is this exact expression, so match on that instead. -->
+            <xpath expr="//label[@for='partner_id'][@invisible=&quot;move_type not in ('in_invoice', 'in_refund', 'in_receipt')&quot;]" position="attributes">
+                <attribute name="invisible">move_type not in ('in_invoice', 'in_refund', 'in_receipt') or hitac_expense_type in ('supplier', 'packing_house', 'employee')</attribute>
+            </xpath>
+            <xpath expr="//label[@for='partner_id'][@invisible=&quot;move_type not in ('in_invoice', 'in_refund', 'in_receipt') or hitac_expense_type in ('supplier', 'packing_house', 'employee')&quot;]" position="after">
+                <label for="partner_id" string="Supplier" style="font-weight:bold;"
+                       invisible="hitac_expense_type != 'supplier'"/>
+                <label for="partner_id" string="Packing House" style="font-weight:bold;"
+                       invisible="hitac_expense_type != 'packing_house'"/>
+                <label for="partner_id" string="Employee" style="font-weight:bold;"
+                       invisible="hitac_expense_type != 'employee'"/>
+            </xpath>
+
+            <field name="partner_id" widget="res_partner_many2one" position="attributes">
+                <attribute name="domain">[('hitac_type', '=', hitac_expense_type)] if hitac_expense_type in ('supplier', 'packing_house', 'employee') else []</attribute>
+            </field>
+            <field name="partner_id" widget="res_partner_many2one" position="after">
+                <field name="hitac_expense_type" invisible="move_type not in ('in_invoice', 'in_receipt')"/>
+            </field>
+
+            <!-- No Credit Notes out of Hitac Expenses documents. -->
+            <button name="action_reverse" position="attributes">
+                <attribute name="invisible">move_type not in ('out_invoice', 'in_invoice') or state != 'posted' or hitac_expense_type</attribute>
+            </button>
+
+            <!-- Once fully paid, who paid a Hitac expense document and how
+                 is restricted to System Admin — everyone else just sees the
+                 record as settled. -->
+            <field name="payment_state" invisible="1" force_save="1" position="after">
+                <field name="hitac_show_payments_button" invisible="1"/>
+            </field>
+            <button name="open_payments" position="attributes">
+                <attribute name="invisible">not payment_count or not hitac_show_payments_button</attribute>
+            </button>
+        </field>
+    </record>
+
+</odoo>
